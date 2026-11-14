@@ -1,0 +1,12 @@
+{
+  // Static assets only: no code runs on the server (free, no limits).
+  "name": "cuanto-vale-tu-voto",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "apps.nubuza.com/cuanto-vale-tu-voto*", "zone_name": "nubuza.com" }],
+  "workers_dev": false
+}
