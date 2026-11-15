@@ -76,11 +76,23 @@ describe('projection 2026', () => {
     const nat = nationalTally(cons);
     for (const id of ['pp', 'psoe', 'vox', 'fa']) {
       const got = (100 * nat.find((p) => p.id === id)!.votes) / valid;
-      expect(Math.abs(got - avg.shares[id])).toBeLessThan(0.3);
+      // What the polls leave unassigned is spread among all lists, so each lands a touch above its poll.
+      expect(Math.abs(got - avg.shares[id])).toBeLessThan(0.5);
     }
   });
   it('only lists standing in a province get votes there', () => {
     for (const c of cons) for (const p of c.parties) expect(lists2026[c.id].lists).toContain(p.id);
+  });
+  it('lists no poll publishes do not balloon', () => {
+    const base = real('e2023');
+    for (const [code, id] of [['42', 'sy'], ['44', 'te']] as const) {
+      const b = base[code];
+      const was = (b.parties.find((r) => r[0] === id)?.[1] ?? 0) / (b.parties.reduce((a, r) => a + r[1], 0) + b.blank);
+      const c = cons.find((x) => x.id === code)!;
+      const now = (c.parties.find((x) => x.id === id)?.votes ?? 0) / c.valid;
+      expect(was).toBeGreaterThan(0.1);
+      expect(now / was).toBeLessThan(1.3);
+    }
   });
   it('more turnout means more votes', () => {
     const more = project({ shares: avg.shares, turnoutDelta: 5 });

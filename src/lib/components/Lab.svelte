@@ -19,10 +19,10 @@
   }
 </script>
 
-<section class="section" aria-labelledby="lab-title">
-  <h2 id="lab-title">🧪 {m.lab.title}</h2>
-  <p class="lead">{m.lab.lead}</p>
-  <div class="card">
+<section class="lab" aria-labelledby="lab-title">
+  <h3 id="lab-title">🧪 {m.lab.title}</h3>
+  <p class="note">{m.lab.lead}</p>
+  <div>
     <div class="cols">
       <div>
         <label for="pollster">{m.lab.source}</label>
@@ -52,7 +52,7 @@
       </fieldset>
     </div>
     {#if app.modified}
-      <button type="button" class="btn primary" onclick={() => app.resetLab()}>↺ {m.lab.reset}</button>
+      <button type="button" class="btn small primary" onclick={() => app.resetLab()}>↺ {m.lab.reset}</button>
     {/if}
     {#if frozen}<p class="frozen">{m.lab.blackout}</p>{/if}
     <p class="note">{m.lab.sources} {fmt(m.lab.updated, { date: date(meta.lastPoll), updated: date(meta.updated) })}</p>
@@ -60,11 +60,21 @@
 </section>
 
 <style>
+  .lab {
+    background: var(--sky, #eef6ff);
+    border: 2px dashed var(--ink);
+    border-radius: var(--radius-s);
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  h3 {
+    margin: 0 0 0.2rem;
+  }
   .cols {
     display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-    margin-bottom: 1rem;
+    gap: 1.1rem;
+    margin: 0.8rem 0;
   }
   label,
   legend {
@@ -100,7 +110,7 @@
   }
   li {
     display: grid;
-    grid-template-columns: 1fr 48px 8.2rem 48px;
+    grid-template-columns: minmax(0, 1fr) 48px 4.6rem 48px;
     align-items: center;
     gap: 0.4rem;
   }

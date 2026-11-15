@@ -223,13 +223,7 @@ export const privacy: Page = {
       h: 'Qué se guarda en tu dispositivo',
       body: [
         '**Nada.** La calculadora no usa cookies propias ni almacenamiento local: no recuerda tu provincia ni tu opción de voto. Si recargas la página, empieza de cero.',
-        'Si pulsas «Compartir», el enlace que se crea lleva la provincia y la opción para que otra persona vea lo mismo. Solo existe si tú lo compartes.'
-      ]
-    },
-    {
-      h: 'Enlaces para compartir',
-      body: [
-        'Si pulsas «Compartir», el enlace incluye la provincia y la opción que estás viendo para que la otra persona vea lo mismo. Tú decides si lo compartes y con quién. La imagen descargable solo lleva la provincia y el peso del voto.'
+        'Un enlace a la web puede llevar una provincia y una opción en la dirección para abrirla ya elegida. Se lee en tu navegador y no se guarda.'
       ]
     },
     {
@@ -301,7 +295,7 @@ export const terms: Page = {
     {
       h: 'Uso permitido',
       body: [
-        'Puedes usar la web y compartir sus enlaces e imágenes libremente para uso personal, educativo o periodístico, citando la fuente. No está permitido copiar la web o sus contenidos de forma masiva ni usarla para engañar sobre el proceso electoral.'
+        'Puedes usar la web y compartir sus enlaces libremente para uso personal, educativo o periodístico, citando la fuente. No está permitido copiar la web o sus contenidos de forma masiva ni usarla para engañar sobre el proceso electoral.'
       ]
     },
     {

@@ -6,7 +6,7 @@ URL: https://apps.nubuza.com/cuanto-vale-tu-voto/
 
 - `src/lib/core/` — las cuentas: D'Hondt, peso del voto, previsión, Senado, simulaciones, otros sistemas.
 - `src/lib/data/` — resultados, censo, encuestas y mapa (JSON). Se regeneran con `npm run data`.
-- `src/lib/components/` — pantallas: pasos, resultado con veredicto y potenciador/freno, escalafón del valor del voto, mapa, ranking, hemiciclo (izquierda/derecha, otros sistemas de reparto, viaje en el tiempo), encuestas, diagramas, tour de Urni.
+- `src/lib/components/` — pantallas: pasos, resultado con veredicto y potenciador/freno, escalafón del valor del voto, mapa, ranking, hemiciclo (izquierda/derecha, otros sistemas de reparto, viaje en el tiempo y «juega con las encuestas» debajo), diagramas, tour de Urni.
 - `src/lib/i18n/es.ts` — todos los textos.
 - `src/lib/content/` + `src/routes/` — páginas «Así funciona la democracia», metodología, FAQ, privacidad y términos; sitemap.
 - `scripts/` — descarga de datos, imágenes de marca, empaquetado y `auto-update.sh` (encuestas al día y publicación automática hasta el 24 nov 2026).

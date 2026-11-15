@@ -6,7 +6,6 @@
   import { blankVerdict, partyVerdict } from '#lib/core/verdict';
   import { approx, count, dec, fmt, m, num, pct, rich } from '#lib/i18n';
   import { app } from '#lib/state.svelte';
-  import Share from './Share.svelte';
   import Urni from './Urni.svelte';
 
   const c = $derived(app.constituency);
@@ -277,7 +276,6 @@
       {/if}
     </article>
   </div>
-  <Share weight={wf(w)} />
 </section>
 
 <style>

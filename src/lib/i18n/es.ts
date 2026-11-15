@@ -251,10 +251,6 @@ export const es = {
       tilePast: 'Personas que no votaron aquí',
       tileShare: '{pct} % del censo'
     },
-    share: 'Compartir',
-    shareText: 'Mira cuánto vale tu voto según dónde votas y a quién votas',
-    copied: 'Enlace copiado',
-    poster: 'Descargar imagen'
   },
   map: {
     title: 'El mapa del voto',
@@ -320,14 +316,14 @@ export const es = {
   },
   lab: {
     title: 'Juega con las encuestas',
-    lead: 'Mueve los controles y mira cómo cambian el mapa, los escaños y tu voto.',
+    lead: 'Mueve los controles y mira cómo cambia el hemiciclo. También cambian el mapa y el valor de tu voto.',
     source: 'Encuesta',
     average: 'Media de encuestas ({n} empresas)',
     turnout: 'Participación',
     turnoutValue: '{sign}{n} puntos respecto a 2023',
     turnoutSame: 'Como en 2023',
-    nudge: 'Sube o baja un partido',
-    nudgeValue: '{pct} % del voto',
+    nudge: 'Sube o baja un partido (% del voto)',
+    nudgeValue: '{pct} %',
     reset: 'Volver a las encuestas',
     sources: 'Usamos encuestas publicadas por empresas privadas.',
     updated: 'Última encuesta: {date}. Datos actualizados el {updated}.',

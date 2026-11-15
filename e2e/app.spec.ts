@@ -66,7 +66,24 @@ test('hemicycle: sides, counting rules and time travel', async ({ page }) => {
   expect(l1).not.toBe(l0);
 });
 
-test('a shared link opens the same vote', async ({ page }) => {
+test('playing with the polls moves the hemicycle next to it', async ({ page }) => {
+  await vote(page);
+  const sec = page.locator('section[aria-labelledby="chamber-title"]');
+  const lab = sec.locator('section.lab');
+  await expect(lab).toBeVisible();
+  const row = sec.locator('table.data tbody tr').first();
+  const before = await row.locator('.st').textContent();
+  for (let i = 0; i < 8; i++) await lab.locator('.step').nth(1).click();
+  await expect(row.locator('.st')).not.toHaveText(before!);
+  await lab.getByRole('button', { name: /↺/ }).click();
+  await expect(row.locator('.st')).toHaveText(before!);
+  // Poll controls make no sense on a real result.
+  await sec.locator('#time').fill('0');
+  await expect(lab).toBeHidden();
+  await expect(page.getByRole('button', { name: /Compartir|Descargar/ })).toHaveCount(0);
+});
+
+test('a link opens the same vote', async ({ page }) => {
   await open(page, '?e=e2023&p=44&v=pp');
   await expect(page.locator('#prov')).toHaveValue('44');
   await expect(page.getByTestId('verdict')).toBeVisible();

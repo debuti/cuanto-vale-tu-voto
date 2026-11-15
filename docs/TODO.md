@@ -28,6 +28,8 @@
 
 ## Hecho
 
+- 2026-11-15 — v1.1.1: arreglo del modelo (las listas que no salen en las encuestas, como Soria ¡Ya! o Teruel Existe, crecían un 75 % en vez del 15 % máximo y ganaban un escaño que no tocaba: eran los puntos oscuros del hemiciclo); fuera «Compartir» y «Descargar imagen»; «Juega con las encuestas» pasa a estar dentro del hemiciclo, pegado a él.
+
 - 2026-11-15 — v1.1.0: veredicto del voto («tu voto ha hecho que…»), peso como potenciador/freno, escalafón del valor del voto, hemiciclo con lados izquierda/derecha a elegir, línea de la mitad de la cámara, otros sistemas de reparto arriba y viaje animado en el tiempo; página «Así funciona la democracia» con diagramas (LOREG y Constitución); promesa de privacidad al elegir partido; sin almacenamiento; sin menciones al CIS; e2e con Playwright + axe + smoke; actualización automática de encuestas (51 encuestas).
 
 - 2026-11-14 — v1.0.0: datos (2019–2026, encuestas, mapa), motor de cálculo, interfaz completa (pasos, resultado, mapa, ranking, hemiciclo, laboratorio de encuestas, otros sistemas, Senado), tour de Urni, páginas de contenido, SEO, cabeceras de seguridad y despliegue en Cloudflare.

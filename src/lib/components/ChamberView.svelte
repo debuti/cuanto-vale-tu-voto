@@ -8,6 +8,7 @@
   import { SYSTEMS, recount, type SystemId } from '#lib/core/whatif';
   import { approx, date, fmt, m, num, pct, rich } from '#lib/i18n';
   import { app } from '#lib/state.svelte';
+  import Lab from './Lab.svelte';
 
   const s = $derived(app.scenario);
   const ch = $derived(app.effectiveChamber);
@@ -213,6 +214,7 @@
       </figure>
 
       <div>
+        {#if app.projected && live}<Lab />{/if}
         {#if order === 'sides'}
           <div class="mover">
             <p class="note">👆 {m.chamber.sideHelp}</p>

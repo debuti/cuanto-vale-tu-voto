@@ -6,7 +6,6 @@
   import type { SimResult } from '#lib/core/montecarlo';
   import AdSlot from '#lib/components/AdSlot.svelte';
   import ChamberView from '#lib/components/ChamberView.svelte';
-  import Lab from '#lib/components/Lab.svelte';
   import Picker from '#lib/components/Picker.svelte';
   import Ranking from '#lib/components/Ranking.svelte';
   import Result from '#lib/components/Result.svelte';
@@ -78,7 +77,6 @@
 <AdSlot slot="main" />
 <div class="wrap">
   <ChamberView />
-  {#if app.projected}<Lab />{/if}
 
   <section class="section more">
     <a class="btn primary" href={href('how-spain-votes/')}>🏛️ {m.nav.basics}</a>

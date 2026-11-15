@@ -15,7 +15,7 @@ export const BASE: Record<string, string[]> = {
   aa: ['sumar', 'aa'],
   salf: ['vox']
 };
-/** Lists that no poll publishes keep their 2023 share, growing at most this much. */
+/** Lists that no poll publishes keep their 2023 share, growing at most this much in total. */
 const OTHERS_MAX_GROWTH = 1.15;
 const baseIds = (id: string) => BASE[id] ?? [id];
 
@@ -86,6 +86,7 @@ export function project(input: ProjectionInput): Constituency[] {
   const blankNat = codes.reduce((a, c) => a + base[c].blank, 0) / natValid;
   const othersTarget = Math.max(0.005, 1 - polledSum - blankNat);
 
+  let grown = 1;
   for (let iter = 0; iter < 4; iter++) {
     const nat: Record<string, number> = {};
     let natOthers = 0;
@@ -95,7 +96,8 @@ export function project(input: ProjectionInput): Constituency[] {
         if (polled.has(id)) nat[id] = (nat[id] ?? 0) + v;
         else natOthers += v;
       }
-    const otherRatio = natOthers > 0 ? Math.min(OTHERS_MAX_GROWTH, Math.max(0.2, (othersTarget * natValid26) / natOthers)) : 1;
+    const otherRatio = natOthers > 0 ? Math.min(OTHERS_MAX_GROWTH / grown, Math.max(0.2, (othersTarget * natValid26) / natOthers)) : 1;
+    grown *= otherRatio;
     for (const c of codes) {
       let sum = base[c].blank / validBase[c];
       for (const id in share[c]) {

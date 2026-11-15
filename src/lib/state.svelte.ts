@@ -114,16 +114,7 @@ class AppState {
     }
   }
 
-  /** Query string for sharing: only what matters to reproduce the view. */
-  query(): string {
-    const q = new URLSearchParams();
-    q.set('e', this.election.slice(1));
-    if (this.chamber === 'senado') q.set('c', 's');
-    q.set('p', this.prov);
-    if (this.cons) q.set('i', this.cons);
-    q.set('v', this.option === 'party' ? this.party || 'x' : this.option);
-    return q.toString();
-  }
+  /** A link can carry the place and the option (`?e=2023&p=44&v=pp`); it is read, never written. */
   fromQuery(q: URLSearchParams): boolean {
     if (!q.has('p') && !q.has('e')) return false;
     const v = q.get('v') ?? '';
@@ -146,7 +137,7 @@ class AppState {
     this.cons = '';
     this.resetLab();
   }
-  /** Nothing is saved anywhere: a reload starts again. Only a shared link carries choices. */
+  /** Nothing is saved anywhere: a reload starts again. Only a link carries choices. */
   load() {
     if (!browser) return;
     this.fromQuery(new URLSearchParams(location.search));

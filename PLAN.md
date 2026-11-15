@@ -128,8 +128,8 @@ Single main screen, mobile first, everything reacts live:
 - **What-if tab**: other electoral systems.
 - **Methodology page**: formulas, sources, poll list with links, limits. Prerendered,
   good for SEO and AdSense.
-- **Share**: URL keeps state in the query (`?p=44&party=xx`), plus a share-card image
-  (no personal data, always shows the URL).
+- **Links**: a URL can open a place and an option (`?e=2023&p=44&v=pp`); it is only read.
+  The share button and the poster were removed in v1.1.1 (owner's call).
 - Welcome wizard (nubuza req. 6) with the mascot: a little ballot box ("Urni" — name TBD).
 
 Nothing is saved (no localStorage, cookies or IndexedDB): a reload starts from scratch and the welcome tour shows on every visit to the calculator. Owner decision, 2026-11-15.
