@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://labs.nubuza.com/cuanto-vale-tu-voto/sitemap.xml

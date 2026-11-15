@@ -2,7 +2,7 @@
 
 Calculadora neutral del valor del voto en las elecciones generales de España. Web estática
 (SvelteKit + adapter-static) servida por un Worker de static assets de Cloudflare en
-<https://apps.nubuza.com/cuanto-vale-tu-voto/>. Sin servidor, sin cuentas, sin datos de usuarios y sin almacenamiento en el navegador.
+<https://labs.nubuza.com/cuanto-vale-tu-voto/>. Sin servidor, sin cuentas, sin datos de usuarios y sin almacenamiento en el navegador.
 
 Plan y decisiones: [PLAN.md](PLAN.md). Pendientes: [docs/TODO.md](docs/TODO.md).
 

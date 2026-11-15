@@ -20,7 +20,7 @@ the browser. Deviations from the nubuza playbook are listed in **Decisions to ag
 | 4 | v1 covers **Congreso and Senado** | ✅ |
 | 5 | **No Google Drive sync**: agreed exception to nubuza req. 2–3 (nothing is stored at all: owner decision 2026-11-15, a reload starts from scratch) | ✅ exception |
 | 6 | **Spanish only** (it only applies to Spanish voters): agreed exception to nubuza req. 13 (EN+ES). No `/en/`, `<html lang="es">` | ✅ exception |
-| 7 | URL: `apps.nubuza.com/cuanto-vale-tu-voto/` | ✅ |
+| 7 | URL: `labs.nubuza.com/cuanto-vale-tu-voto/` (antes en apps.nubuza.com, 301 desde allí) | ✅ |
 | 8 | Mascot: **Urni**, a little ballot box | ✅ |
 | 9 | **Election selector**: 29N 2026 (projection from polls), 23J 2023, 10N 2019, 28A 2019 (real results) | ✅ |
 | 10 | **Very attractive visuals** are a core requirement, not polish | ✅ |

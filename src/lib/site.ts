@@ -3,7 +3,7 @@ import { resolve } from '$app/paths';
 /** Base path without the trailing slash ('' at the root of a domain). */
 export const base = (resolve as (path: string) => string)('/').replace(/\/$/, '');
 
-export const ORIGIN = 'https://apps.nubuza.com';
+export const ORIGIN = 'https://labs.nubuza.com';
 export const SITE = ORIGIN + base;
 export const PAGES = ['', 'how-spain-votes/', 'methodology/', 'faq/', 'privacy/', 'terms/'] as const;
 export const href = (path = '') => `${base}/${path}`;

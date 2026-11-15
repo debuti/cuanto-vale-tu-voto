@@ -3,12 +3,13 @@
 ## Pendiente (dueño)
 
 - [ ] **AdSense**: crear 2 bloques display responsive (AdSense → Anuncios → Por bloque de anuncios) y poner sus IDs en `monetization.config.json` → `adsense.slots.main` y `.footer`. Sin ellos no se muestran anuncios.
-- [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `apps.nubuza.com` → «Manage site» → snippet JS, valor `token`). Seguramente es el mismo que usan las demás apps de apps.nubuza.com. Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
-- [ ] **robots.txt**: añadir `Sitemap: https://apps.nubuza.com/cuanto-vale-tu-voto/sitemap.xml` en `apps-root/public/robots.txt` del repo nubuza y desplegarlo.
-- [ ] **Search Console → Sitemaps → añadir** `https://apps.nubuza.com/cuanto-vale-tu-voto/sitemap.xml` (y en Bing Webmaster Tools).
+- [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `labs.nubuza.com` (dar de alta el sitio si no está) → «Manage site» → snippet JS, valor `token`). Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
+- [ ] **Search Console → Sitemaps → añadir** `https://labs.nubuza.com/cuanto-vale-tu-voto/sitemap.xml` (y en Bing Webmaster Tools). Si labs.nubuza.com no está como propiedad, añadirla (o usar la propiedad de dominio `nubuza.com`).
 - [ ] Difusión en redes antes de la veda de encuestas (24 nov 2026).
 
 ## Pendiente (Claude)
+
+- [ ] `infra/labs-root/` (raíz neutra de labs.nubuza.com: robots.txt con los sitemaps de labs) debería vivir en el repo nubuza, como `apps-root`. Moverlo cuando el dueño lo diga.
 
 - [ ] Vigilar `scripts/auto-update.sh --loop` (encuestas al día, una vez al día hasta el 24 nov 2026): mirar `.cache/auto-update.log` y relanzarlo si el contenedor se reinició.
 - [ ] Recordar al dueño los bloques de AdSense (lo pidió el 15 nov; avisar hacia el 17–18 nov).
@@ -27,6 +28,8 @@
 - Sin tarjeta en nubuza.com ni alta en `ops/apps.json` **de momento** (dueño, 15 nov 2026).
 
 ## Hecho
+
+- 2026-11-15 — v1.2.0: la app se muda a `labs.nubuza.com/cuanto-vale-tu-voto/`. `infra/labs-root/` (dominio labs.nubuza.com, robots.txt con el sitemap) e `infra/apps-redirect/` (301 desde la URL antigua de apps.nubuza.com).
 
 - 2026-11-15 — v1.1.1: arreglo del modelo (las listas que no salen en las encuestas, como Soria ¡Ya! o Teruel Existe, crecían un 75 % en vez del 15 % máximo y ganaban un escaño que no tocaba: eran los puntos oscuros del hemiciclo); fuera «Compartir» y «Descargar imagen»; «Juega con las encuestas» pasa a estar dentro del hemiciclo, pegado a él.
 

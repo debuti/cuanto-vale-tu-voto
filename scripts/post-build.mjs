@@ -1,4 +1,4 @@
-// Moves the build under its base path, so the Worker serves it at apps.nubuza.com/<slug>/.
+// Moves the build under its base path, so the Worker serves it at labs.nubuza.com/<slug>/.
 import { cpSync, mkdirSync, renameSync, rmSync } from 'node:fs';
 
 const slug = (process.env.BASE_PATH ?? '/cuanto-vale-tu-voto').replace(/^\/|\/$/g, '');

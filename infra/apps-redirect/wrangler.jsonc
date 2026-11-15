@@ -1,0 +1,8 @@
+{
+  // 301 from the old URL (apps.nubuza.com/cuanto-vale-tu-voto*) to labs.nubuza.com.
+  "name": "cuanto-vale-tu-voto-redirect",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "./public" },
+  "routes": [{ "pattern": "apps.nubuza.com/cuanto-vale-tu-voto*", "zone_name": "nubuza.com" }],
+  "workers_dev": false
+}

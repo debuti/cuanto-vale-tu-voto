@@ -7,6 +7,6 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  "routes": [{ "pattern": "apps.nubuza.com/cuanto-vale-tu-voto*", "zone_name": "nubuza.com" }],
+  "routes": [{ "pattern": "labs.nubuza.com/cuanto-vale-tu-voto*", "zone_name": "nubuza.com" }],
   "workers_dev": false
 }

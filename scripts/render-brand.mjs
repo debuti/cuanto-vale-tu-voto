@@ -68,7 +68,7 @@ const pngs = {
       ${title(60, 330, 88)}¿Cuánto vale</text>${title(60, 425, 88)}tu voto?</text>
       <text x="62" y="490" font-family="Nunito" font-weight="700" font-size="30" fill="#4f4868">Depende de dónde votas y a quién votas.</text>
       <text x="62" y="532" font-family="Nunito" font-weight="700" font-size="30" fill="#4f4868">Elecciones generales · 29N 2026</text>
-      <text x="62" y="590" font-family="Nunito" font-weight="800" font-size="26" fill="#5b3fd6">apps.nubuza.com/cuanto-vale-tu-voto</text>`
+      <text x="62" y="590" font-family="Nunito" font-weight="800" font-size="26" fill="#5b3fd6">labs.nubuza.com/cuanto-vale-tu-voto</text>`
     ),
     1200
   ]

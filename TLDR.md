@@ -2,7 +2,7 @@
 
 Web (solo en español) que enseña cuánto pesa tu voto en las generales según tu provincia y tu opción: cualquier candidatura, voto en blanco, nulo o no votar. Elecciones 29N 2026 (previsión con encuestas de empresas privadas) y resultados reales de 2023 y 2019. Congreso y Senado. Todo se calcula en el navegador y no guarda nada: al recargar empieza de cero.
 
-URL: https://apps.nubuza.com/cuanto-vale-tu-voto/
+URL: https://labs.nubuza.com/cuanto-vale-tu-voto/
 
 - `src/lib/core/` — las cuentas: D'Hondt, peso del voto, previsión, Senado, simulaciones, otros sistemas.
 - `src/lib/data/` — resultados, censo, encuestas y mapa (JSON). Se regeneran con `npm run data`.
