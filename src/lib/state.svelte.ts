@@ -7,8 +7,6 @@ import type { Chamber, Constituency, ElectionId, Scenario } from '#lib/core/type
 
 export type VoteOption = 'party' | 'blank' | 'null' | 'abstain';
 const OPTIONS: VoteOption[] = ['party', 'blank', 'null', 'abstain'];
-const KEY = 'cvtv:prefs:v1';
-export const TOUR_KEY = 'cvtv:tour-seen';
 
 interface Prefs {
   election: ElectionId;
@@ -33,15 +31,6 @@ const DEFAULTS: Prefs = {
   nudges: {}
 };
 
-function tourSeen(): boolean {
-  if (!browser) return false;
-  try {
-    return !!localStorage.getItem(TOUR_KEY);
-  } catch {
-    return false;
-  }
-}
-
 class AppState {
   election = $state<ElectionId>(DEFAULTS.election);
   chamber = $state<Chamber>(DEFAULTS.chamber);
@@ -54,9 +43,10 @@ class AppState {
   turnout = $state(0);
   nudges = $state<Record<string, number>>({});
   sim = $state<SimResult | null>(null);
-  tourOpen = $state(!tourSeen());
+  /** Nothing is stored, so every visit starts with the tour (one tap to skip). */
+  tourOpen = $state(true);
   aboutOpen = $state(false);
-  /** True once saved preferences and the shared link have been read (browser only). */
+  /** True once the shared link (if any) has been read (browser only). */
   ready = $state(false);
 
   projected = $derived(this.election === 'e2026');
@@ -149,44 +139,21 @@ class AppState {
     return true;
   }
 
-  load() {
-    if (!browser) return;
-    try {
-      const saved = localStorage.getItem(KEY);
-      if (saved) this.apply(JSON.parse(saved));
-    } catch {
-      /* private mode: carry on without saved preferences */
-    }
-    this.fromQuery(new URLSearchParams(location.search));
-    this.ready = true;
-  }
-  save() {
-    if (!browser) return;
-    try {
-      localStorage.setItem(KEY, JSON.stringify(this.snapshot()));
-    } catch {
-      /* ignore */
-    }
-  }
-  forget() {
-    try {
-      localStorage.removeItem(KEY);
-      localStorage.removeItem(TOUR_KEY);
-    } catch {
-      /* ignore */
-    }
+  /** Back to the starting point. */
+  reset() {
     this.apply(DEFAULTS);
     this.party = '';
     this.cons = '';
     this.resetLab();
   }
+  /** Nothing is saved anywhere: a reload starts again. Only a shared link carries choices. */
+  load() {
+    if (!browser) return;
+    this.fromQuery(new URLSearchParams(location.search));
+    this.ready = true;
+  }
   closeTour() {
     this.tourOpen = false;
-    try {
-      localStorage.setItem(TOUR_KEY, '1');
-    } catch {
-      /* ignore */
-    }
   }
 }
 

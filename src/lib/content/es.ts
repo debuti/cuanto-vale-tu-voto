@@ -1,13 +1,30 @@
 // Content pages (real prerendered HTML). `**bold**` allowed; lines starting with "- " are list items.
+export type Fig =
+  | { kind: 'flow'; steps: { icon: string; tag?: string; t: string; d: string; alt?: boolean }[] }
+  | { kind: 'cards'; cards: { icon: string; t: string; lines: string[] }[] }
+  | { kind: 'split'; total: number; unit: string; parts: { n: number; label: string }[] }
+  | {
+      kind: 'dhondt';
+      seats: number;
+      caption: string;
+      head: { party: string; votes: string; seats: string; out: string };
+      parties: { name: string; votes: number }[];
+      moral: string;
+    }
+  | { kind: 'bars'; total: number; mark: string; rows: { label: string; n: number | null; open?: string; what: string }[] };
 export interface Section {
   h: string;
   body: string[];
+  fig?: Fig;
 }
 export interface Page {
   title: string;
   description: string;
   intro: string;
   sections: Section[];
+  /** A button to a related page, shown under the introduction. */
+  related?: { path: string; label: string };
+  outro?: string;
 }
 
 export const methodology: Page = {
@@ -60,7 +77,7 @@ export const methodology: Page = {
     {
       h: 'Las encuestas',
       body: [
-        'Usamos encuestas publicadas por **empresas privadas**, recogidas en la tabla pública de Wikipedia. **No usamos las del CIS** ni las encargadas por los propios partidos.',
+        'Usamos encuestas publicadas por **empresas privadas**, recogidas en la tabla pública de Wikipedia. No usamos las encargadas por los propios partidos.',
         'La media toma la última encuesta de cada empresa dentro de las tres últimas semanas, y todas pesan lo mismo. También puedes elegir una empresa concreta.',
         'La ley prohíbe publicar encuestas en los cinco días anteriores a la votación. Desde ese momento los datos de la calculadora quedan congelados.'
       ]
@@ -112,7 +129,15 @@ export const faq: Page = {
   description:
     'Respuestas claras sobre el valor del voto en España: por qué no todos los votos pesan igual, qué pasa con el voto en blanco, el voto nulo y la abstención, y cómo se reparten los escaños.',
   intro: 'Las dudas más habituales, respondidas con palabras sencillas.',
+  related: { path: 'how-spain-votes/', label: '🏛️ Así funciona la democracia, con dibujos' },
   sections: [
+    {
+      h: '¿Votamos al presidente del Gobierno?',
+      body: [
+        'No directamente. En las elecciones generales elegimos a los **350 diputados** del Congreso y a los senadores. Después, **el Congreso elige al presidente**: en la primera votación necesita mayoría absoluta (176 síes) y, si no llega, dos días después le basta con más síes que noes.',
+        'Lo explicamos paso a paso y con dibujos en la página «Así funciona la democracia».'
+      ]
+    },
     {
       h: '¿Por qué mi voto no vale lo mismo que el de otra provincia?',
       body: [
@@ -158,7 +183,7 @@ export const faq: Page = {
     {
       h: '¿De dónde salen las previsiones de 2026?',
       body: [
-        'De la media de las encuestas publicadas por empresas privadas, aplicada al resultado de 2023 en cada provincia. No usamos las encuestas del CIS. Es una estimación: puede cambiar y puede fallar.'
+        'De la media de las encuestas publicadas por empresas privadas, aplicada al resultado de 2023 en cada provincia. Es una estimación: puede cambiar y puede fallar.'
       ]
     },
     {
@@ -170,7 +195,7 @@ export const faq: Page = {
     {
       h: '¿Guardáis mis datos o lo que elijo?',
       body: [
-        'No. Todo se calcula en tu navegador. No hay registro ni cuentas, y lo que eliges no se envía a ningún servidor. Tus preferencias se guardan solo en tu dispositivo y puedes borrarlas desde «Acerca de».'
+        'No. Todo se calcula en tu navegador. No hay registro ni cuentas, y lo que eliges no se envía a ningún servidor. No guardamos nada: si recargas la página, empieza de cero.'
       ]
     },
     {
@@ -197,8 +222,8 @@ export const privacy: Page = {
     {
       h: 'Qué se guarda en tu dispositivo',
       body: [
-        'Para que no tengas que repetir los pasos, tu navegador guarda en su almacenamiento local tus últimas elecciones en la calculadora (elecciones, cámara, provincia, opción y ajustes de encuestas) y si ya has visto la presentación.',
-        'Esos datos no salen de tu dispositivo. Puedes borrarlos en «Acerca de» → «Borrar mis preferencias» o borrando los datos del sitio en tu navegador.'
+        '**Nada.** La calculadora no usa cookies propias ni almacenamiento local: no recuerda tu provincia ni tu opción de voto. Si recargas la página, empieza de cero.',
+        'Si pulsas «Compartir», el enlace que se crea lleva la provincia y la opción para que otra persona vea lo mismo. Solo existe si tú lo compartes.'
       ]
     },
     {
@@ -292,6 +317,184 @@ export const terms: Page = {
     {
       h: 'Ley aplicable y contacto',
       body: ['Estas condiciones se rigen por la ley española. Para cualquier consulta: me@nubuza.com.']
+    }
+  ]
+};
+
+export const basics: Page = {
+  title: 'Así funciona la democracia en España',
+  description:
+    'Lo básico de la democracia española explicado con dibujos: qué se vota en unas elecciones generales, cómo se reparten los escaños según la ley electoral, cómo se elige al presidente del Gobierno según la Constitución, las mayorías y los plazos.',
+  intro:
+    'Qué votas, cómo se convierten los votos en escaños y cómo se elige después al presidente del Gobierno. Todo con dibujos y sin palabras raras.',
+  related: { path: 'faq/', label: '💬 Preguntas frecuentes' },
+  sections: [
+    {
+      h: 'Lo básico en un minuto',
+      body: [
+        '- En España **no votamos directamente al presidente del Gobierno**. Votamos a las **Cortes Generales** (Congreso y Senado), y después **el Congreso elige al presidente**.',
+        '- Pueden votar todos los españoles con **18 años** cumplidos que estén en el censo.',
+        '- El voto es **libre, igual, directo y secreto**. Nadie puede saber qué has votado.',
+        '- Hay elecciones generales, como mucho, **cada 4 años**.'
+      ]
+    },
+    {
+      h: 'Qué votas: dos sobres',
+      body: ['El día de las elecciones generales puedes meter dos sobres en dos urnas distintas.'],
+      fig: {
+        kind: 'cards',
+        cards: [
+          {
+            icon: '✉️',
+            t: 'Sobre blanco: el Congreso',
+            lines: [
+              '**350 diputados**.',
+              'Eliges la papeleta de **un partido entero**: la lista viene cerrada y no puedes tachar ni cambiar el orden.',
+              'Es la cámara que **elige al presidente** y la que más pesa al hacer las leyes.'
+            ]
+          },
+          {
+            icon: '📜',
+            t: 'Sobre sepia: el Senado',
+            lines: [
+              '**208 senadores** elegidos en las urnas (y otros los nombran los parlamentos autonómicos).',
+              'Marcas **nombres con una cruz**: hasta 3 en la mayoría de provincias. Pueden ser de partidos distintos.',
+              'Revisa las leyes que le llegan del Congreso.'
+            ]
+          }
+        ]
+      }
+    },
+    {
+      h: 'Cuántos diputados elige cada provincia',
+      body: [
+        'Cada provincia es una **circunscripción**: elige sus propios diputados y sus votos no se mezclan con los de otras provincias.',
+        'La ley electoral reparte así los 350 escaños del Congreso:'
+      ],
+      fig: {
+        kind: 'split',
+        total: 350,
+        unit: 'diputados',
+        parts: [
+          { n: 100, label: '2 fijos para cada una de las 50 provincias' },
+          { n: 2, label: '1 para Ceuta y 1 para Melilla' },
+          { n: 248, label: 'Se reparten según la población' }
+        ]
+      }
+    },
+    {
+      h: 'Por eso no todos los votos pesan igual',
+      body: [
+        'Como todas las provincias tienen 2 diputados fijos, **en las provincias con poca gente hacen falta muchos menos votantes por cada escaño**. Por eso un voto en Soria o Teruel pesa varias veces más que uno en Madrid o Barcelona.',
+        'En el Senado pasa todavía más: cada provincia de la península elige **4 senadores**, tenga los habitantes que tenga. Las islas grandes eligen 3, las pequeñas 1, y Ceuta y Melilla 2 cada una.'
+      ]
+    },
+    {
+      h: 'Del voto al escaño',
+      body: ['En cada provincia, los votos del Congreso se convierten en escaños en cuatro pasos:'],
+      fig: {
+        kind: 'flow',
+        steps: [
+          { icon: '🗳️', t: 'Se cuentan los votos válidos', d: 'Los votos a partidos más los votos en blanco. Los nulos no cuentan.' },
+          { icon: '🚧', t: 'El listón del 3 %', d: 'Los partidos con menos del 3 % de los votos válidos de la provincia quedan fuera del reparto.' },
+          { icon: '➗', t: 'Se divide', d: 'Los votos de cada partido se dividen entre 1, entre 2, entre 3… hasta el número de escaños.' },
+          { icon: '🪑', t: 'Se reparten los escaños', d: 'Los escaños van, uno a uno, a los resultados más altos. Es el método D’Hondt.' }
+        ]
+      }
+    },
+    {
+      h: 'Un ejemplo del método D’Hondt',
+      body: ['Imagina una provincia que elige **5 diputados**. Los cinco resultados más altos de la tabla se llevan un escaño cada uno:'],
+      fig: {
+        kind: 'dhondt',
+        seats: 5,
+        caption: 'Reparto de 5 escaños con el método D’Hondt',
+        head: { party: 'Partido', votes: 'Votos', seats: 'Escaños', out: 'Fuera: menos del 3 %' },
+        parties: [
+          { name: 'Partido A', votes: 96000 },
+          { name: 'Partido B', votes: 60000 },
+          { name: 'Partido C', votes: 33000 },
+          { name: 'Partido D', votes: 11000 },
+          { name: 'Partido E', votes: 5000 }
+        ],
+        moral:
+          'Fíjate: el partido A tiene menos de la mitad de los votos y se lleva 3 de los 5 escaños. Cuantos menos escaños reparte una provincia, más favorece el reparto a los partidos grandes. Y los votos de D y E no eligen a nadie.'
+      }
+    },
+    {
+      h: 'Voto en blanco, voto nulo y no votar',
+      body: [
+        '- **En blanco** (sobre vacío): es un voto válido. No va a ningún partido, pero sube un poquito el listón del 3 %.',
+        '- **Nulo** (papeleta rota, tachada o dos papeletas distintas): no es válido. Para el reparto es como no haber votado.',
+        '- **No votar**: los escaños se reparten igual entre quienes sí votan. No quedan escaños vacíos.'
+      ]
+    },
+    {
+      h: 'El calendario de unas elecciones',
+      body: ['La ley electoral marca los plazos. Desde que se convocan hasta que se vota pasan siempre **54 días**:'],
+      fig: {
+        kind: 'flow',
+        steps: [
+          { icon: '📣', tag: 'Día 0', t: 'Se convocan', d: 'Se publica el decreto en el BOE y se disuelven las Cortes. En 2026 fue el 6 de octubre.' },
+          { icon: '📢', tag: '15 días', t: 'Campaña electoral', d: 'Los partidos piden el voto. En 2026, del 13 al 27 de noviembre.' },
+          { icon: '🔇', tag: 'Últimos 5 días', t: 'Sin encuestas', d: 'La ley prohíbe publicar encuestas en los cinco días anteriores a la votación.' },
+          { icon: '🤫', tag: 'Víspera', t: 'Jornada de reflexión', d: 'Ya no se puede pedir el voto.' },
+          { icon: '🗳️', tag: 'Día 54', t: 'Se vota', d: 'De 9 de la mañana a 8 de la tarde. Por la noche se cuentan los votos.' }
+        ]
+      }
+    },
+    {
+      h: 'De las urnas al Gobierno',
+      body: ['Lo dice la Constitución (artículo 99). Después de votar, pasa esto:'],
+      fig: {
+        kind: 'flow',
+        steps: [
+          { icon: '🏛️', tag: 'Antes de 25 días', t: 'Se forman las Cortes', d: 'Los nuevos diputados y senadores toman posesión y eligen a quien preside cada cámara.' },
+          { icon: '👑', t: 'El Rey propone un candidato', d: 'Antes habla con los partidos que tienen diputados. Suele proponer a quien puede reunir más apoyos.' },
+          { icon: '🙋', tag: '1.ª votación', t: 'Mayoría absoluta', d: 'El candidato explica su programa y el Congreso vota. Necesita 176 síes o más.' },
+          { icon: '⏱️', tag: '48 horas después', t: '2.ª votación: más síes que noes', d: 'Si no llegó a 176, se vota otra vez. Ahora basta con tener más síes que noes; las abstenciones ayudan.' },
+          { icon: '🤝', t: 'Si lo consigue: hay presidente', d: 'El Rey lo nombra y el presidente elige a sus ministros. El Gobierno dura, como mucho, 4 años.' },
+          { icon: '🔁', tag: '2 meses', alt: true, t: 'Si nadie lo consigue: se repiten las elecciones', d: 'Si pasan dos meses desde la primera votación sin presidente, se disuelven las Cortes y se vuelve a votar.' }
+        ]
+      }
+    },
+    {
+      h: 'Las mayorías: cuántos síes hacen falta',
+      body: ['En un Congreso de 350 diputados, no todas las decisiones necesitan los mismos votos:'],
+      fig: {
+        kind: 'bars',
+        total: 350,
+        mark: 'La mitad',
+        rows: [
+          { label: 'Mayoría simple', n: null, open: 'Más síes que noes', what: 'Leyes normales, Presupuestos y la segunda votación de investidura.' },
+          { label: 'Mayoría absoluta', n: 176, what: 'Investidura a la primera, leyes orgánicas, moción de censura y superar un veto del Senado.' },
+          { label: 'Tres quintos', n: 210, what: 'Reforma normal de la Constitución y elegir a parte del Tribunal Constitucional y del Poder Judicial.' },
+          { label: 'Dos tercios', n: 234, what: 'Reforma de las partes esenciales de la Constitución. Además hay que repetir elecciones y hacer un referéndum.' }
+        ]
+      }
+    },
+    {
+      h: 'Cómo puede acabar un Gobierno antes de tiempo',
+      body: [
+        '- **Moción de censura**: la presentan al menos 35 diputados, con un candidato alternativo. Si la apoyan 176 o más, ese candidato pasa a ser presidente.',
+        '- **Cuestión de confianza**: el presidente pregunta al Congreso si lo sigue apoyando. Si tiene más noes que síes, debe dimitir.',
+        '- **Elecciones anticipadas**: el presidente puede disolver las Cortes y convocar elecciones cuando quiera, salvo durante una moción de censura o en el primer año tras unas elecciones convocadas así.',
+        '- **Fin de la legislatura**: a los 4 años se convocan elecciones sí o sí.'
+      ]
+    },
+    {
+      h: 'Para qué sirve el Senado',
+      body: [
+        'El Senado revisa las leyes que aprueba el Congreso. Puede proponer cambios o **vetarlas**, pero el Congreso tiene la última palabra: puede levantar el veto con mayoría absoluta o, pasados dos meses, con mayoría simple.',
+        'Además, el Senado es quien autoriza al Gobierno a intervenir una comunidad autónoma (artículo 155), por mayoría absoluta.'
+      ]
+    },
+    {
+      h: 'De dónde sale todo esto',
+      body: [
+        'De la **Constitución Española** (artículos 66 a 69, 81, 90, 99, 112 a 115, 167 y 168) y de la **Ley Orgánica 5/1985 del Régimen Electoral General** (artículos 42, 51, 69, 96 y 161 a 166).',
+        'Es un resumen para entenderlo fácil. El texto oficial y completo está en el Boletín Oficial del Estado (boe.es).'
+      ]
     }
   ]
 };

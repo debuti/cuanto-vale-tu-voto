@@ -18,7 +18,7 @@ the browser. Deviations from the nubuza playbook are listed in **Decisions to ag
 | 2 | No login, no accounts, all client-side | ✅ |
 | 3 | Polls from public private pollsters; **CIS excluded** | ✅ |
 | 4 | v1 covers **Congreso and Senado** | ✅ |
-| 5 | **No Google Drive sync**: agreed exception to nubuza req. 2–3 (nothing worth syncing; last-used controls in localStorage) | ✅ exception |
+| 5 | **No Google Drive sync**: agreed exception to nubuza req. 2–3 (nothing is stored at all: owner decision 2026-11-15, a reload starts from scratch) | ✅ exception |
 | 6 | **Spanish only** (it only applies to Spanish voters): agreed exception to nubuza req. 13 (EN+ES). No `/en/`, `<html lang="es">` | ✅ exception |
 | 7 | URL: `apps.nubuza.com/cuanto-vale-tu-voto/` | ✅ |
 | 8 | Mascot: **Urni**, a little ballot box | ✅ |
@@ -40,7 +40,8 @@ To be useful it should launch before the poll blackout (24 Nov), ideally by ~20 
 - **Senate 2026**: PSOE + Frente Amplio stand together ("Senado de Progreso", id `sdp`); the model keeps 75 % of their separate votes (`ALLIANCE_KEEP`).
 - **Data** lives in `src/lib/data/*.json`, rebuilt by `npm run data` (`scripts/update-data.mjs`). Party-commissioned polls are excluded as well as the CIS.
 - **Social image** is `og.png` (rendered with resvg, which has no JPEG output).
-- **No e2e yet**: the build container has no browser, so Playwright/axe have not run. Component tests run in jsdom instead (`src/lib/components/ui.test.ts`).
+- **e2e**: Playwright (mobile + desktop) and axe run against `dist/` served by wrangler (`npm run e2e`), plus a smoke test against the live site (`npm run smoke`).
+- **v1.1 (owner's adjustments, 2026-11-15)**: verdict line for each vote, weight shown as a power-up/brake, value ladder (every place+list ranked), hemicycle with left/right sides, majority line, counting systems and time travel on top (the former "what if" simulator is merged there), "how Spain votes" page with diagrams, zero storage, no CIS mentions in the UI.
 
 ---
 
@@ -131,7 +132,7 @@ Single main screen, mobile first, everything reacts live:
   (no personal data, always shows the URL).
 - Welcome wizard (nubuza req. 6) with the mascot: a little ballot box ("Urni" — name TBD).
 
-Last-used controls saved in localStorage. No other user data.
+Nothing is saved (no localStorage, cookies or IndexedDB): a reload starts from scratch and the welcome tour shows on every visit to the calculator. Owner decision, 2026-11-15.
 
 **Visual direction** (core requirement): nubuza kawaii-but-clean (pastels, rounded cards,
 Fredoka + Nunito, Urni). Big animated numbers (count-up), a "vote-meter" gauge for the

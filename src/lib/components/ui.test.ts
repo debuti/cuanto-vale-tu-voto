@@ -10,7 +10,7 @@ import Picker from './Picker.svelte';
 import Ranking from './Ranking.svelte';
 import Result from './Result.svelte';
 import SpainMap from './SpainMap.svelte';
-import WhatIf from './WhatIf.svelte';
+import ValueRank from './ValueRank.svelte';
 
 let live: ReturnType<typeof mount>[] = [];
 function show(...parts: Component[]) {
@@ -27,12 +27,12 @@ const button = (text: string) => [...document.querySelectorAll('button')].find((
 
 afterEach(() => {
   live.forEach((c) => unmount(c));
-  app.forget();
+  app.reset();
 });
 
 describe('interface', () => {
   it('renders every election, chamber and option without errors', () => {
-    const body = show(Picker, Result, SpainMap, Ranking, ChamberView, Lab, WhatIf);
+    const body = show(Picker, Result, SpainMap, Ranking, ChamberView, Lab, ValueRank);
     for (const e of ELECTIONS)
       for (const chamber of ['congreso', 'senado'] as const)
         for (const option of ['party', 'blank', 'null', 'abstain'] as const) {

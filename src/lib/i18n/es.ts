@@ -10,6 +10,7 @@ export const es = {
   },
   nav: {
     home: 'Inicio',
+    basics: 'Así funciona la democracia',
     methodology: 'Cómo se calcula',
     faq: 'Preguntas frecuentes',
     privacy: 'Privacidad',
@@ -34,6 +35,7 @@ export const es = {
     which: '¿A qué candidatura?',
     whichHint: 'Están todas las candidaturas que se presentan en {place}.',
     whichHintPast: 'Están todas las candidaturas que se presentaron en {place}.',
+    private: 'Te aseguramos que esto no sale de la pestaña de tu navegador. No lo guardamos ni lo enviamos a nadie.',
     showAll: 'Ver las {n} candidaturas',
     showLess: 'Ver menos',
     step: 'Paso {n}'
@@ -67,10 +69,64 @@ export const es = {
       senadoOne: 'En {place} se elige **1 senador** entre **{census} personas** con derecho a voto.'
     },
     perSeat: 'Sale a **un escaño por cada {eps} votantes**. La media de España es uno por cada {avg}.',
-    weightMore: 'Tu voto aquí pesa **{w} veces** el voto medio de España.',
-    weightSame: 'Tu voto aquí pesa **más o menos como** el voto medio de España ({w} veces).',
-    weightLess: 'Tu voto aquí pesa **menos** que el voto medio de España: {w} veces.',
-    weightUnit: 'veces el voto medio',
+    power: {
+      up: {
+        badge: 'Potenciador',
+        line: 'Votar en {place} te da un **potenciador ×{w}**: tu voto cuenta como **{w} votos** de un español medio.'
+      },
+      down: {
+        badge: 'Freno',
+        line: 'Votar en {place} te pone un **freno ×{w}**: tu voto cuenta solo como **{w} votos** de un español medio.'
+      },
+      same: {
+        badge: 'Sin ventaja ni freno',
+        line: 'En {place} tu voto cuenta **más o menos como** el de un español medio (×{w}).'
+      }
+    },
+    verdict: {
+      title: 'En resumen',
+      rivalHold: ' frente a {rival}',
+      rivalGain: { now: ', que ahora sería de {rival}', past: ', que fue para {rival}' },
+      first: 'su primer escaño',
+      another: 'un escaño más',
+      holdTight: {
+        now: '¡Bien! Con votos como el tuyo, **{party} se llevaría un escaño en {place} por los pelos**: solo {n} votos de margen{rival}.',
+        past: '¡Por los pelos! **{party} se llevó un escaño en {place}** con solo {n} votos de margen{rival}.'
+      },
+      gainTight: {
+        now: '¡Casi! A **{party} le faltan solo {n} votos** para ganar {which} en {place}{rival}. Aquí cada voto cuenta de verdad.',
+        past: '¡Qué cerca! A **{party} le faltaron solo {n} votos** para ganar {which} en {place}{rival}.'
+      },
+      safe: {
+        now: 'Tu voto se suma a un escaño seguro: **{party} tendría {seats} en {place}**, con {n} votos de margen. Suma, pero no decide.',
+        past: '**{party} consiguió {seats} en {place}** con holgura: tuvo {n} votos de margen.'
+      },
+      far: {
+        now: 'Con estos números, **tu voto a {party} en {place} no elegiría a nadie**: le faltan {n} votos para su primer escaño.',
+        past: '**Los votos a {party} en {place} no eligieron a nadie**: le faltaron {n} votos para su primer escaño.'
+      },
+      farNoGain: {
+        now: 'Con estos números, **tu voto a {party} en {place} no elegiría a nadie**.',
+        past: '**Los votos a {party} en {place} no eligieron a nadie**.'
+      },
+      blank: {
+        costsSeat: {
+          now: 'Los votos en blanco suben el listón del 3 % y, con estos números, **le costarían un escaño a {party}** en {place}.',
+          past: 'Los votos en blanco subieron el listón del 3 % y **le costaron un escaño a {party}** en {place}.'
+        },
+        raisesBar: {
+          now: 'Tu voto en blanco sube un poco el listón del 3 % y **se lo pone más difícil a {party}**, que está justo por debajo ({pct} %).',
+          past: 'Los votos en blanco subieron el listón del 3 % y **se lo pusieron más difícil a {party}**, que se quedó en el {pct} %.'
+        },
+        nothing: {
+          now: 'Tu voto en blanco cuenta como voto válido, pero con estos números **no cambia ningún escaño** en {place}.',
+          past: 'Los votos en blanco contaron como válidos, pero **no cambiaron ningún escaño** en {place}.'
+        },
+        senate: 'En el Senado el voto en blanco **solo cuenta en la estadística**: no cambia quién sale elegido.'
+      },
+      null: 'Tu voto nulo **no entra en el reparto**: los escaños de {place} los deciden los demás.',
+      abstain: 'Si no votas, **los {seats} de {place} se reparten igual**: los deciden quienes sí votan.'
+    },
     weightTile: 'Peso de tu voto',
     weightRank: 'Puesto {rank} de {total} (el 1 es donde más pesa)',
     firstSeat: 'Para lograr el primer escaño aquí hace falta alrededor del **{pct} %** de los votos.',
@@ -227,6 +283,30 @@ export const es = {
     titleNow: { congreso: 'Así quedaría el Congreso', senado: 'Así quedaría el Senado' },
     titlePast: { congreso: 'Así quedó el Congreso', senado: 'Así quedó el Senado' },
     majority: 'Mayoría absoluta: {n} escaños',
+    half: 'Mitad',
+    majorityLine: 'mayoría con {n}',
+    halfHelp: 'La línea del centro marca la mitad de la cámara. Quien la cruza tiene **mayoría absoluta ({n} escaños)** y puede elegir presidente sin ayuda.',
+    has: 'Tiene mayoría absoluta',
+    lacks: 'Le faltan {n} para la mayoría absoluta',
+    alone: { yes: '**{party} tiene mayoría absoluta** en solitario.', no: '**Ningún partido llega solo a {n}**: hacen falta pactos.' },
+    order: 'Ordenar el hemiciclo',
+    orders: {
+      size: { name: 'Por tamaño', hint: 'Del más grande al más pequeño' },
+      sides: { name: 'Izquierda y derecha', hint: 'Dos lados enfrentados. Puedes mover cada partido.' }
+    },
+    sideHelp: 'Toca un partido para cambiarlo de sitio: lado izquierdo, en medio o lado derecho. Así pruebas cualquier combinación de pactos.',
+    sides: { left: 'Lado izquierdo', right: 'Lado derecho', none: 'En medio' },
+    sideAria: '{party}, {seats} escaños: {side}. Toca para cambiarlo de sitio.',
+    system: 'Contar los votos con otras reglas',
+    time: 'Viaja en el tiempo',
+    timeHint: 'Mueve el control y mira cómo entran y salen los escaños.',
+    play: 'Ver la evolución',
+    stop: 'Parar',
+    frameReal: 'Resultado real del {date}',
+    framePolls: 'Encuestas hasta el {date}',
+    frameNow: 'Lo que dicen hoy las encuestas',
+    backNow: 'Volver al principio',
+    diff: 'Cambio',
     seats: 'escaños',
     range: 'entre {lo} y {hi}',
     others: 'Sin escaño',
@@ -249,10 +329,21 @@ export const es = {
     nudge: 'Sube o baja un partido',
     nudgeValue: '{pct} % del voto',
     reset: 'Volver a las encuestas',
-    noCis: 'Usamos encuestas publicadas por empresas privadas. No usamos las del CIS.',
+    sources: 'Usamos encuestas publicadas por empresas privadas.',
     updated: 'Última encuesta: {date}. Datos actualizados el {updated}.',
     blackout:
       'La ley no permite publicar encuestas en los cinco días anteriores a las elecciones. Los datos están congelados desde el 23 de noviembre.'
+  },
+  value: {
+    title: 'El escalafón: dónde vale más un voto',
+    lead: 'Todas las combinaciones de lugar y candidatura, ordenadas por lo que se nota un voto. Vale más donde el voto pesa más y hay un escaño en el aire.',
+    margin: 'Un escaño se decide por **{n} votos**',
+    score: 'de 100',
+    yours: 'Tu elección está en el **puesto {rank} de {total}**.',
+    you: 'La tuya',
+    showMore: 'Ver los {n} primeros',
+    showLess: 'Ver menos',
+    note: 'No es una recomendación de voto: es la misma cuenta para todas las candidaturas. Toca una fila para verla en detalle.'
   },
   whatif: {
     title: '¿Y si las reglas fueran otras?',
@@ -295,18 +386,16 @@ export const es = {
   },
   about: {
     title: 'Acerca de',
-    body: '¿Cuánto vale tu voto? es una aplicación de nubuza. Todo se calcula en tu navegador: no hay cuentas ni guardamos datos tuyos.',
+    body: '¿Cuánto vale tu voto? es una aplicación de nubuza. Todo se calcula en tu navegador: no hay cuentas y no guardamos nada. Si recargas la página, empieza de cero.',
     version: 'Versión',
     data: 'Datos actualizados el {date}',
     tour: 'Ver la presentación otra vez',
-    reset: 'Borrar mis preferencias',
-    resetDone: 'Preferencias borradas',
     close: 'Cerrar',
     contact: 'Contacto'
   },
   footer: {
     sources:
-      'Fuentes: Ministerio del Interior e INE (resultados, censo y escaños), encuestas publicadas por empresas privadas (sin CIS) recogidas en Wikipedia. Mapa: datos abiertos del IGN.',
+      'Fuentes: Ministerio del Interior e INE (resultados, censo y escaños), encuestas publicadas por empresas privadas, recogidas en Wikipedia. Mapa: datos abiertos del IGN.',
     rights: '© 2026 nubuza. Todos los derechos reservados.',
     by: 'hecho por'
   },
@@ -314,7 +403,8 @@ export const es = {
   units: {
     seat: { one: '{n} escaño', other: '{n} escaños' },
     deputy: { one: '{n} diputado', other: '{n} diputados' },
-    senator: { one: '{n} senador', other: '{n} senadores' }
+    senator: { one: '{n} senador', other: '{n} senadores' },
+    outOf: '{a} de {b}'
   }
 } as const;
 

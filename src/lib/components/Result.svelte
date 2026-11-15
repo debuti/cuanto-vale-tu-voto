@@ -3,6 +3,7 @@
   import { blankEffect, effectiveThreshold, electorsPerSeat, partyMetrics, returnIndex, weight, weightRange } from '#lib/core/metrics';
   import { seatOdds } from '#lib/core/montecarlo';
   import { marks, senateSplit } from '#lib/core/senate';
+  import { blankVerdict, partyVerdict } from '#lib/core/verdict';
   import { approx, count, dec, fmt, m, num, pct, rich } from '#lib/i18n';
   import { app } from '#lib/state.svelte';
   import Share from './Share.svelte';
@@ -24,7 +25,9 @@
   const seatsLine = $derived(
     fmt(m.result.seatsLine[c.seats === 1 ? (`${ch}One` as const) : ch], { place: c.name, seats: c.seats, census: num(c.census) })
   );
-  const weightLine = $derived(fmt(w >= 1.15 ? m.result.weightMore : w <= 0.87 ? m.result.weightLess : m.result.weightSame, { w: wf(w) }));
+  const power = $derived<'up' | 'down' | 'same'>(w >= 1.15 ? 'up' : w <= 0.87 ? 'down' : 'same');
+  const POWER_ICON = { up: '⚡', down: '🐢', same: '⚖️' } as const;
+  const weightLine = $derived(fmt(m.result.power[power].line, { w: wf(w), place: c.name }));
 
   // 2. What you do with it
   const info = $derived(party(app.partyId));
@@ -39,6 +42,37 @@
   const cast = $derived(c.valid + c.invalid);
   const abst = $derived(Math.max(0, c.census - cast));
   const ARC = Math.PI * 54;
+
+  // 3. The story in one sentence
+  const verdict = $derived.by<{ text: string; mood: 'wow' | 'happy' | 'think' } | null>(() => {
+    const V = m.result.verdict;
+    const place = c.name;
+    if (app.option === 'null') return { text: fmt(V.null, { place }), mood: 'think' };
+    if (app.option === 'abstain') return { text: fmt(V.abstain, { place, seats: count(unit, c.seats) }), mood: 'think' };
+    if (app.option === 'blank') {
+      if (ch === 'senado') return { text: V.blank.senate, mood: 'think' };
+      const b = blankVerdict(c);
+      const vars = { place, party: 'party' in b ? party(b.party).short : '', pct: 'share' in b ? pct(b.share) : '' };
+      return { text: fmt(V.blank[b.kind][tense], vars), mood: b.kind === 'nothing' ? 'think' : 'wow' };
+    }
+    if (!app.party) return null;
+    const v = partyVerdict(c, app.partyId, ch, pm);
+    if (!v) return null;
+    const vars = { party: info.short, place, seats: count(m.units.seat, pm.seats), n: v.margin === null ? '' : n(v.margin) };
+    if (v.kind === 'holdTight')
+      return { text: fmt(V.holdTight[tense], { ...vars, rival: v.rival ? fmt(V.rivalHold, { rival: party(v.rival).short }) : '' }), mood: 'wow' };
+    if (v.kind === 'gainTight')
+      return {
+        text: fmt(V.gainTight[tense], {
+          ...vars,
+          which: v.first ? V.first : V.another,
+          rival: v.rival ? fmt(V.rivalGain[tense], { rival: party(v.rival).short }) : ''
+        }),
+        mood: 'wow'
+      };
+    if (v.kind === 'safe') return { text: fmt(V.safe[tense], vars), mood: 'happy' };
+    return { text: fmt((v.margin === null ? V.farNoGain : V.far)[tense], vars), mood: 'think' };
+  });
 </script>
 
 <section class="section" aria-labelledby="result-title">
@@ -50,12 +84,23 @@
     </div>
   </div>
 
+  {#if verdict}
+    <div class="verdict" data-testid="verdict" role="status">
+      <Urni size={64} mood={verdict.mood} />
+      <div>
+        <h3>{m.result.verdict.title}</h3>
+        <p>{@html rich(verdict.text)}</p>
+      </div>
+    </div>
+  {/if}
+
   <div class="grid">
     <article class="card">
       <h3>{fmt(m.result.placeTitle, { place: c.name })}</h3>
-      <div class="hero-num">
+      <div class="power {power}" data-testid="power">
+        <span class="ico" aria-hidden="true">{POWER_ICON[power]}</span>
         <span class="big">×{wf(w)}</span>
-        <span class="unit">{m.result.weightUnit}</span>
+        <span class="unit">{m.result.power[power].badge}</span>
       </div>
       <div class="gauge" aria-hidden="true">
         <div class="track"></div>
@@ -266,23 +311,62 @@
     font-size: 1.2rem;
     line-height: 1.45;
   }
-  .hero-num {
+  .verdict {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    gap: 1rem;
+    background: var(--sun);
+    border: 3px solid #f2c94c;
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .verdict h3 {
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
+    margin: 0 0 0.2rem;
+  }
+  .verdict p {
+    font-size: clamp(1.2rem, 4vw, 1.45rem);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .power {
+    display: inline-flex;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.3rem 0.7rem;
     margin-top: 0.4rem;
+    padding: 0.6rem 1.1rem 0.6rem 0.8rem;
+    border-radius: 999px;
+    border: 3px solid var(--ink);
+    box-shadow: 0 5px 0 var(--ink);
+    background: var(--primary-soft);
+  }
+  .power.up {
+    background: linear-gradient(135deg, #fff3a8, #b9f3c8);
+  }
+  .power.down {
+    background: linear-gradient(135deg, #ffe4d4, #ffd0c2);
+  }
+  .power .ico {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1;
   }
   .big {
     font-family: var(--font-title);
     font-weight: 600;
-    font-size: clamp(3.2rem, 14vw, 4.6rem);
+    font-size: clamp(3rem, 13vw, 4.4rem);
     line-height: 1;
-    color: var(--primary);
+    color: var(--ink);
   }
   .unit {
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
   .gauge {
     position: relative;

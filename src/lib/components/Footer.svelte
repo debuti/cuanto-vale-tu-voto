@@ -11,6 +11,7 @@
     <p class="neutral">{m.app.neutral}</p>
     <nav aria-label={m.nav.about}>
       <a href={href()}>{m.nav.home}</a>
+      <a href={href('how-spain-votes/')}>{m.nav.basics}</a>
       <a href={href('methodology/')}>{m.nav.methodology}</a>
       <a href={href('faq/')}>{m.nav.faq}</a>
       <a href={href('privacy/')}>{m.nav.cookies}</a>

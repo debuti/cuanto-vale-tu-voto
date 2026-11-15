@@ -68,7 +68,7 @@
     g.fillText(`×${weight}`, 540, 630);
     g.fillStyle = '#2a2440';
     g.font = '800 50px "Nunito Variable", sans-serif';
-    g.fillText(m.result.weightUnit, 540, 730);
+    g.fillText(m.result.weightTile, 540, 730);
     g.font = '600 38px "Nunito Variable", sans-serif';
     wrap(g, m.app.tagline, 540, 890, 900, 50);
     g.font = '800 40px "Nunito Variable", sans-serif';

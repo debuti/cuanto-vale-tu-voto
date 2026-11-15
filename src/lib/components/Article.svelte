@@ -2,6 +2,7 @@
   import type { Page } from '#lib/content/es';
   import { m, rich } from '#lib/i18n';
   import { SITE, href } from '#lib/site';
+  import Diagram from './Diagram.svelte';
   import Seo from './Seo.svelte';
   import Urni from './Urni.svelte';
 
@@ -40,6 +41,7 @@
     <h1>{page.title}</h1>
   </header>
   <p class="lead">{page.intro}</p>
+  {#if page.related}<p><a class="btn" href={href(page.related.path)}>{page.related.label}</a></p>{/if}
   {#each page.sections as s (s.h)}
     <section>
       <h2>{s.h}</h2>
@@ -52,6 +54,7 @@
           <p>{@html rich(b)}</p>
         {/if}
       {/each}
+      {#if s.fig}<Diagram fig={s.fig} />{/if}
     </section>
   {/each}
   <p><a class="btn primary" href={href()}>{m.nav.back}</a></p>

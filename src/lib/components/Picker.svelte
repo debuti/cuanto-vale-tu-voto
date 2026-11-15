@@ -85,6 +85,7 @@
     <section class="step">
       <h2><span class="n" aria-hidden="true">3</span>{m.steps.which}</h2>
       <p class="note">{fmt(app.projected ? m.steps.whichHint : m.steps.whichHintPast, { place })}</p>
+      <p class="private" data-testid="private"><span aria-hidden="true">🔒</span> {m.steps.private}</p>
       <div class="parties" role="group" aria-label={m.steps.which}>
         {#each visible as id (id)}
           <button type="button" class="chip" aria-pressed={app.partyId === id} title={party(id).name} onclick={() => (app.party = id)}>
@@ -103,6 +104,12 @@
 </div>
 
 <style>
+  .private {
+    background: var(--mint);
+    border-radius: var(--radius-s);
+    padding: 0.6rem 0.9rem;
+    font-weight: 700;
+  }
   fieldset {
     border: 0;
     padding: 0;

@@ -55,7 +55,7 @@
       <button type="button" class="btn primary" onclick={() => app.resetLab()}>↺ {m.lab.reset}</button>
     {/if}
     {#if frozen}<p class="frozen">{m.lab.blackout}</p>{/if}
-    <p class="note">{m.lab.noCis} {fmt(m.lab.updated, { date: date(meta.lastPoll), updated: date(meta.updated) })}</p>
+    <p class="note">{m.lab.sources} {fmt(m.lab.updated, { date: date(meta.lastPoll), updated: date(meta.updated) })}</p>
   </div>
 </section>
 

@@ -8,4 +8,5 @@
 
 - `style-src 'unsafe-inline'`: Svelte aplica estilos en línea (`style:`) para colores de partido y anchos de barras.
 - `worker-src 'self' blob:`: las simulaciones corren en un Web Worker propio.
-- Pendiente: comprobar estas cabeceras en tests e2e/smoke cuando haya navegador (ver `docs/TODO.md`).
+- Estas cabeceras se comprueban en `e2e/app.spec.ts` (contra wrangler) y en `e2e/smoke.spec.ts` (contra producción).
+- La app no usa `localStorage`, `sessionStorage`, cookies propias ni IndexedDB (comprobado en `e2e/app.spec.ts`).

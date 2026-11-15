@@ -3,16 +3,17 @@
 ## Pendiente (dueño)
 
 - [ ] **AdSense**: crear 2 bloques display responsive (AdSense → Anuncios → Por bloque de anuncios) y poner sus IDs en `monetization.config.json` → `adsense.slots.main` y `.footer`. Sin ellos no se muestran anuncios.
-- [ ] **Cloudflare Web Analytics**: crear el sitio y poner el token en `monetization.config.json` → `cloudflareAnalyticsToken`.
+- [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `apps.nubuza.com` → «Manage site» → snippet JS, valor `token`). Seguramente es el mismo que usan las demás apps de apps.nubuza.com. Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
 - [ ] **robots.txt**: añadir `Sitemap: https://apps.nubuza.com/cuanto-vale-tu-voto/sitemap.xml` en `apps-root/public/robots.txt` del repo nubuza y desplegarlo.
 - [ ] **Search Console → Sitemaps → añadir** `https://apps.nubuza.com/cuanto-vale-tu-voto/sitemap.xml` (y en Bing Webmaster Tools).
-- [ ] Tarjeta de la app en nubuza.com y alta en `ops/apps.json` del repo nubuza.
 - [ ] Difusión en redes antes de la veda de encuestas (24 nov 2026).
 
 ## Pendiente (Claude)
 
-- [ ] Tests e2e con Playwright (móvil y escritorio), axe (WCAG 2.2 AA) y smoke contra producción: el contenedor de build no tiene navegador.
-- [ ] Actualizar encuestas (`npm run data`) hasta el 23 nov 2026; después quedan congeladas.
+- [ ] Vigilar `scripts/auto-update.sh --loop` (encuestas al día, una vez al día hasta el 24 nov 2026): mirar `.cache/auto-update.log` y relanzarlo si el contenedor se reinició.
+- [ ] Recordar al dueño los bloques de AdSense (lo pidió el 15 nov; avisar hacia el 17–18 nov).
+- [ ] **Propuestas de cada partido** al elegirlo, por temas (corrupción, infraestructuras, impuestos y poder adquisitivo, vivienda, inmigración, economía, orden mundial): hace falta sacarlas de los programas oficiales de 2026, con enlace a la fuente y redacción neutra. Pendiente de que el dueño confirme el enfoque.
+- [ ] Mover la detección del 3 % del diagrama D'Hondt a `core` si se reutiliza.
 - [ ] Senado de 2019 (10N y 28A): ahora avisa y enseña el Congreso.
 - [ ] Encuestas por provincia o comunidad para afinar la previsión.
 - [ ] Tras el 29N: cargar el resultado real de 2026.
@@ -22,7 +23,11 @@
 - Sin sync con Google Drive (no hay datos que sincronizar). PLAN.md, decisión 5.
 - Solo en español, sin `/en/`. PLAN.md, decisión 6.
 - Mapa en SVG propio en vez de MapLibre. PLAN.md, 1b (pendiente de confirmar con el dueño).
+- **No guarda nada** (ni localStorage ni cookies propias): lo pidió el dueño el 15 nov 2026. Por eso el tour de inicio sale en cada visita a la calculadora, en vez de una sola vez (norma 6).
+- Sin tarjeta en nubuza.com ni alta en `ops/apps.json` **de momento** (dueño, 15 nov 2026).
 
 ## Hecho
+
+- 2026-11-15 — v1.1.0: veredicto del voto («tu voto ha hecho que…»), peso como potenciador/freno, escalafón del valor del voto, hemiciclo con lados izquierda/derecha a elegir, línea de la mitad de la cámara, otros sistemas de reparto arriba y viaje animado en el tiempo; página «Así funciona la democracia» con diagramas (LOREG y Constitución); promesa de privacidad al elegir partido; sin almacenamiento; sin menciones al CIS; e2e con Playwright + axe + smoke; actualización automática de encuestas (51 encuestas).
 
 - 2026-11-14 — v1.0.0: datos (2019–2026, encuestas, mapa), motor de cálculo, interfaz completa (pasos, resultado, mapa, ranking, hemiciclo, laboratorio de encuestas, otros sistemas, Senado), tour de Urni, páginas de contenido, SEO, cabeceras de seguridad y despliegue en Cloudflare.

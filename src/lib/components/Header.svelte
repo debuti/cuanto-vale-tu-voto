@@ -17,7 +17,7 @@
         {m.nav.help}
       </button>
       <button class="btn small" type="button" onclick={() => (app.aboutOpen = true)} aria-label={m.nav.about}>
-        <span aria-hidden="true">ⓘ</span>
+        <svg aria-hidden="true" viewBox="0 0 20 20" width="18" height="18"><circle cx="10" cy="10" r="8.5" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="10" cy="6" r="1.4" fill="currentColor" /><rect x="8.8" y="8.6" width="2.4" height="6.4" rx="1.2" fill="currentColor" /></svg>
         <span class="wide">{m.nav.about}</span>
       </button>
     </nav>

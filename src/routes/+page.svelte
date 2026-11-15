@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { replaceState } from '$app/navigation';
   import { m, rich } from '#lib/i18n';
   import { SITE, href } from '#lib/site';
   import { app } from '#lib/state.svelte';
@@ -14,7 +13,7 @@
   import Seo from '#lib/components/Seo.svelte';
   import SpainMap from '#lib/components/SpainMap.svelte';
   import Urni from '#lib/components/Urni.svelte';
-  import WhatIf from '#lib/components/WhatIf.svelte';
+  import ValueRank from '#lib/components/ValueRank.svelte';
 
   let mounted = $state(false);
   let worker: Worker | undefined;
@@ -41,18 +40,6 @@
     const input = { constituencies: s.constituencies.map(({ id, seats, blank, parties }) => ({ id, seats, blank, parties })) };
     const t = setTimeout(() => worker?.postMessage({ id: ++job, input }), 200);
     return () => clearTimeout(t);
-  });
-
-  // Remember the choices and keep them in the address bar, so the link can be shared.
-  $effect(() => {
-    if (!app.ready) return;
-    const q = app.query();
-    app.save();
-    try {
-      replaceState(`${href()}?${q}`, {});
-    } catch {
-      /* router not ready yet */
-    }
   });
 
   const jsonld = {
@@ -84,6 +71,7 @@
 
   <Picker />
   <Result />
+  <ValueRank />
   <SpainMap />
   <Ranking />
 </div>
@@ -91,9 +79,9 @@
 <div class="wrap">
   <ChamberView />
   {#if app.projected}<Lab />{/if}
-  {#if app.effectiveChamber === 'congreso'}<WhatIf />{/if}
 
   <section class="section more">
+    <a class="btn primary" href={href('how-spain-votes/')}>🏛️ {m.nav.basics}</a>
     <a class="btn" href={href('methodology/')}>📐 {m.nav.methodology}</a>
     <a class="btn" href={href('faq/')}>💬 {m.nav.faq}</a>
   </section>

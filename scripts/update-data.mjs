@@ -1,6 +1,7 @@
 // Builds the static data the app ships with, from public sources.
 //   node scripts/update-data.mjs           -> parse the cached downloads
 //   node scripts/update-data.mjs --fetch   -> download everything again first
+//   node scripts/update-data.mjs --polls   -> download only the poll table again
 // Sources: Wikipedia constituency articles (which cite the Ministerio del Interior),
 // Wikipedia's poll table (private pollsters only, CIS excluded) and open province shapes.
 import fs from 'node:fs';
@@ -32,12 +33,16 @@ async function raw(title) {
   await sleep(400);
   return res.text();
 }
-async function fetchAll() {
-  for (const d of ['wiki/cong', 'wiki/sen']) fs.mkdirSync(path.join(CACHE, d), { recursive: true });
+async function fetchPolls() {
+  fs.mkdirSync(path.join(CACHE, 'wiki'), { recursive: true });
   fs.writeFileSync(
     path.join(CACHE, 'wiki/polls.wiki'),
     await raw('Opinion polling for the 2026 Spanish general election')
   );
+}
+async function fetchAll() {
+  for (const d of ['wiki/cong', 'wiki/sen']) fs.mkdirSync(path.join(CACHE, d), { recursive: true });
+  await fetchPolls();
   for (const name of Object.keys(PROVINCES)) {
     const t = name.replace(/_/g, ' ');
     fs.writeFileSync(
@@ -374,6 +379,7 @@ const Poll = v.object({
 
 // ---------- main ----------
 if (process.argv.includes('--fetch')) await fetchAll();
+else if (process.argv.includes('--polls')) await fetchPolls();
 const { out: congress, warnings } = buildCongress();
 for (const id of ['e2023', 'e2019n', 'e2019a'])
   for (const p of Object.values(congress[id].provinces)) v.parse(RealProvince, p);

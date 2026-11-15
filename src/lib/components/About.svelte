@@ -6,18 +6,13 @@
   import ByNubuza from './ByNubuza.svelte';
   import Modal from './Modal.svelte';
 
-  let done = $state(false);
-  function reset() {
-    app.forget();
-    done = true;
-  }
   function tour() {
     app.aboutOpen = false;
     app.tourOpen = true;
   }
 </script>
 
-<Modal open={app.aboutOpen} onclose={() => ((app.aboutOpen = false), (done = false))} label={m.about.title}>
+<Modal open={app.aboutOpen} onclose={() => (app.aboutOpen = false)} label={m.about.title}>
   <h2>{m.about.title}</h2>
   <p>{m.about.body}</p>
   <p class="neutral">{m.app.neutral}</p>
@@ -29,6 +24,7 @@
   </dl>
   <p class="note">{fmt(m.about.data, { date: date(meta.updated) })}</p>
   <ul class="links">
+    <li><a href={href('how-spain-votes/')}>{m.nav.basics}</a></li>
     <li><a href={href('methodology/')}>{m.nav.methodology}</a></li>
     <li><a href={href('faq/')}>{m.nav.faq}</a></li>
     <li><a href={href('privacy/')}>{m.nav.privacy}</a></li>
@@ -36,9 +32,7 @@
   </ul>
   <div class="actions">
     <button class="btn small" type="button" onclick={tour}>{m.about.tour}</button>
-    <button class="btn small" type="button" onclick={reset}>{m.about.reset}</button>
   </div>
-  <p class="note" role="status">{done ? m.about.resetDone : ''}</p>
   <div class="end">
     <ByNubuza />
     <button class="btn primary" type="button" onclick={() => (app.aboutOpen = false)}>{m.about.close}</button>
