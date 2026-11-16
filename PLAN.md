@@ -153,7 +153,7 @@ neutral party colours. Share cards designed as posters. Respects `prefers-reduce
 - valibot for data schemas. Vitest + Playwright (mobile + desktop) + axe.
 - Copy from other nubuza apps: `AdSlot`, `ByNubuza`, `WelcomeTour`, `hooks.server.ts`
   meta, i18n layer, `_headers` CSP, version/commit/date in Settings.
-- Pages (Spanish only): `/`, `/methodology/`, `/faq/`, `/privacy/`, `/terms/`, `sitemap.xml`, line in `apps-root/public/robots.txt`.
+- Pages (Spanish only): `/`, `/methodology/`, `/faq/`, `/privacy/`, `/terms/`. No sitemap and noindex: it is a labs experiment, not listed anywhere.
 - Cloudflare Web Analytics. AdSense with 1–2 fixed blocks, away from the controls; block
   the political ad category if it clashes with neutrality.
 

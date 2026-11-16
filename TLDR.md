@@ -8,7 +8,7 @@ URL: https://labs.nubuza.com/cuanto-vale-tu-voto/
 - `src/lib/data/` — resultados, censo, encuestas y mapa (JSON). Se regeneran con `npm run data`.
 - `src/lib/components/` — pantallas: pasos, resultado con veredicto y potenciador/freno, escalafón del valor del voto, mapa, ranking, hemiciclo (izquierda/derecha, otros sistemas de reparto, viaje en el tiempo y «juega con las encuestas» debajo), diagramas, tour de Urni.
 - `src/lib/i18n/es.ts` — todos los textos.
-- `src/lib/content/` + `src/routes/` — páginas «Así funciona la democracia», metodología, FAQ, privacidad y términos; sitemap.
+- `src/lib/content/` + `src/routes/` — páginas «Así funciona la democracia», metodología, FAQ, privacidad y términos. Es un experimento de labs: no se indexa (noindex, sin sitemap).
 - `scripts/` — descarga de datos, imágenes de marca, empaquetado y `auto-update.sh` (encuestas al día y publicación automática hasta el 24 nov 2026).
 - `e2e/` — pruebas en navegador real (Playwright, accesibilidad con axe, smoke contra producción).
 - `docs/TODO.md` — pendientes.

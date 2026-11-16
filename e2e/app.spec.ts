@@ -106,13 +106,14 @@ test('every page renders, without errors or sideways scroll', async ({ page }) =
   expect(errors).toEqual([]);
 });
 
-test('security headers and sitemap', async ({ request }) => {
+test('security headers and noindex (labs experiment)', async ({ request }) => {
   const r = await request.get('./');
   const h = r.headers();
   expect(h['strict-transport-security']).toContain('max-age=31536000');
   expect(h['x-content-type-options']).toBe('nosniff');
   expect(h['referrer-policy']).toBe('no-referrer');
   expect(h['content-security-policy']).toContain("frame-ancestors 'self'");
-  const map = await (await request.get('./sitemap.xml')).text();
-  for (const p of PAGES) expect(map).toContain(`/cuanto-vale-tu-voto/${p}</loc>`);
+  expect(h['x-robots-tag']).toBe('noindex, nofollow');
+  expect(await r.text()).toContain('<meta name="robots" content="noindex, nofollow"');
+  expect((await request.get('./sitemap.xml')).status()).toBe(404);
 });

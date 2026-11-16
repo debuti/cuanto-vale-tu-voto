@@ -4,12 +4,11 @@
 
 - [ ] **AdSense**: crear 2 bloques display responsive (AdSense → Anuncios → Por bloque de anuncios) y poner sus IDs en `monetization.config.json` → `adsense.slots.main` y `.footer`. Sin ellos no se muestran anuncios.
 - [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `labs.nubuza.com` (dar de alta el sitio si no está) → «Manage site» → snippet JS, valor `token`). Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
-- [ ] **Search Console → Sitemaps → añadir** `https://labs.nubuza.com/cuanto-vale-tu-voto/sitemap.xml` (y en Bing Webmaster Tools). Si labs.nubuza.com no está como propiedad, añadirla (o usar la propiedad de dominio `nubuza.com`).
 - [ ] Difusión en redes antes de la veda de encuestas (24 nov 2026).
 
 ## Pendiente (Claude)
 
-- [ ] `infra/labs-root/` (raíz neutra de labs.nubuza.com: robots.txt con los sitemaps de labs) debería vivir en el repo nubuza, como `apps-root`. Moverlo cuando el dueño lo diga.
+- [ ] Borrar el Worker `labs-root` (y `infra/labs-root/`) en cuanto el agente de nubuza coordine el corte: la raíz de labs pasa a `nubuza-labs-root` del repo nubuza. Ojo: borrar el custom domain borra el DNS de labs.
 
 - [ ] Vigilar `scripts/auto-update.sh --loop` (encuestas al día, una vez al día hasta el 24 nov 2026): mirar `.cache/auto-update.log` y relanzarlo si el contenedor se reinició.
 - [ ] Recordar al dueño los bloques de AdSense (lo pidió el 15 nov; avisar hacia el 17–18 nov).
@@ -21,6 +20,8 @@
 
 ## Excepciones acordadas a las normas nubuza
 
+- **Experimento de labs.nubuza.com: no se indexa ni se lista** (noindex en cabecera y meta, sin sitemap, sin tarjeta ni enlaces desde nubuza.com ni redes). Lo confirmó el dueño al agente de nubuza el 16 nov 2026.
+
 - Sin sync con Google Drive (no hay datos que sincronizar). PLAN.md, decisión 5.
 - Solo en español, sin `/en/`. PLAN.md, decisión 6.
 - Mapa en SVG propio en vez de MapLibre. PLAN.md, 1b (pendiente de confirmar con el dueño).
@@ -28,6 +29,8 @@
 - Sin tarjeta en nubuza.com ni alta en `ops/apps.json` **de momento** (dueño, 15 nov 2026).
 
 ## Hecho
+
+- 2026-11-16 — v1.2.2: noindex (`X-Robots-Tag` + meta robots), sin sitemap; robots.txt de labs-root a `Disallow: /`.
 
 - 2026-11-15 — v1.2.0: la app se muda a `labs.nubuza.com/cuanto-vale-tu-voto/`. `infra/labs-root/` (dominio labs.nubuza.com, robots.txt con el sitemap) e `infra/apps-redirect/` (301 desde la URL antigua de apps.nubuza.com).
 
