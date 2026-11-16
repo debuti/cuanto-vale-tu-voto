@@ -26,6 +26,7 @@ the browser. Deviations from the nubuza playbook are listed in **Decisions to ag
 | 10 | **Very attractive visuals** are a core requirement, not polish | ✅ |
 | 11 | Strictly neutral: no voting advice, same treatment for every party | ✅ |
 | 12 | Freeze polls during the legal 5-day blackout (LOREG art. 69.7): from **24 Nov 2026** for 29N | ✅ |
+| 13 | No ads at all (owner, 16 Nov 2026) and noindex: a labs.nubuza.com experiment | ✅ |
 
 Note: the official polls are the **CIS**'s; the **INE** is the statistics institute and we
 *do* use its census/population data (neutral, used by law to allocate seats).
@@ -154,8 +155,7 @@ neutral party colours. Share cards designed as posters. Respects `prefers-reduce
 - Copy from other nubuza apps: `AdSlot`, `ByNubuza`, `WelcomeTour`, `hooks.server.ts`
   meta, i18n layer, `_headers` CSP, version/commit/date in Settings.
 - Pages (Spanish only): `/`, `/methodology/`, `/faq/`, `/privacy/`, `/terms/`. No sitemap and noindex: it is a labs experiment, not listed anywhere.
-- Cloudflare Web Analytics. AdSense with 1–2 fixed blocks, away from the controls; block
-  the political ad category if it clashes with neutrality.
+- Cloudflare Web Analytics. No ads.
 
 ---
 
@@ -173,7 +173,7 @@ neutral party colours. Share cards designed as posters. Respects `prefers-reduce
 ## 7. What I need from you
 
 1. Green light to start building.
-2. Later: AdSense block IDs, Search Console sitemap registration.
+2. ~~Later: AdSense block IDs, Search Console sitemap registration.~~ Dropped: no ads, noindex.
 
 ---
 
@@ -209,5 +209,3 @@ your vote worth in 2008?"), Android.
   pollsters' data are facts but we cite each one.
 - **Data maintenance**: polls go stale → visible "data updated on" date and a simple
   update script.
-- **AdSense**: political content is allowed but reviewed more strictly → real content
-  pages before applying.

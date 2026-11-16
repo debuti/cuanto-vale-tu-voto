@@ -1,11 +1,9 @@
 <script lang="ts">
   import { m } from '#lib/i18n';
   import { href } from '#lib/site';
-  import AdSlot from './AdSlot.svelte';
   import ByNubuza from './ByNubuza.svelte';
 </script>
 
-<AdSlot slot="footer" />
 <footer>
   <div class="wrap">
     <p class="neutral">{m.app.neutral}</p>

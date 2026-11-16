@@ -211,7 +211,7 @@ export const privacy: Page = {
   title: 'Política de privacidad',
   description:
     'Política de privacidad de ¿Cuánto vale tu voto?: no hay cuentas, no recogemos datos personales y lo que eliges no sale de tu navegador.',
-  intro: 'Última actualización: 14 de noviembre de 2026. Responsable: nubuza. Contacto: me@nubuza.com.',
+  intro: 'Última actualización: 16 de noviembre de 2026. Responsable: nubuza. Contacto: me@nubuza.com.',
   sections: [
     {
       h: 'Resumen',
@@ -239,13 +239,6 @@ export const privacy: Page = {
       ]
     },
     {
-      h: 'Publicidad',
-      body: [
-        'La web puede mostrar anuncios de Google AdSense para pagar su mantenimiento. Google y sus socios pueden usar cookies o identificadores para mostrar y medir anuncios. Si visitas la web desde la Unión Europea, el Reino Unido o Suiza, Google te pedirá antes tu consentimiento y podrás cambiarlo cuando quieras.',
-        'Puedes leer cómo usa Google los datos en policies.google.com/technologies/partner-sites. Los anuncios no dependen de la opción de voto que eliges: no la enviamos a nadie.'
-      ]
-    },
-    {
       h: 'Menores',
       body: ['La web no está dirigida a menores de 14 años y no recoge datos de nadie de forma consciente.']
     },
@@ -265,7 +258,7 @@ export const privacy: Page = {
 export const terms: Page = {
   title: 'Términos de uso',
   description: 'Condiciones de uso de ¿Cuánto vale tu voto?, una calculadora informativa y neutral de nubuza.',
-  intro: 'Última actualización: 14 de noviembre de 2026. Al usar la web aceptas estas condiciones.',
+  intro: 'Última actualización: 16 de noviembre de 2026. Al usar la web aceptas estas condiciones.',
   sections: [
     {
       h: 'Qué es esta web',
@@ -303,10 +296,6 @@ export const terms: Page = {
       body: [
         '© 2026 nubuza. Todos los derechos reservados sobre el diseño, los textos, la mascota y el código. Los datos electorales, las encuestas y la cartografía pertenecen a sus respectivas fuentes.'
       ]
-    },
-    {
-      h: 'Publicidad',
-      body: ['La web puede mostrar anuncios identificados como «Publicidad». No controlamos su contenido y no suponen ningún apoyo por nuestra parte.']
     },
     {
       h: 'Ley aplicable y contacto',

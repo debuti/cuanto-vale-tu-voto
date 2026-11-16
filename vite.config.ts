@@ -7,16 +7,10 @@ import { readFileSync } from 'node:fs';
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
 const mon = JSON.parse(readFileSync('monetization.config.json', 'utf8'));
 const base = process.env.BASE_PATH ?? '/cuanto-vale-tu-voto';
-// Third-party origins are opened only when the matching ID is configured.
-const adsOn = mon.adsense.client && Object.values(mon.adsense.slots).some(Boolean);
+// No ads. The Cloudflare Analytics origin is opened only when its token is configured.
 type Src = 'self';
-const adOrigins = [
-  ...(adsOn
-    ? ['https://pagead2.googlesyndication.com', 'https://*.googlesyndication.com', 'https://*.google.com', 'https://*.doubleclick.net', 'https://*.gstatic.com', 'https://*.adtrafficquality.google']
-    : []),
-  ...(mon.cloudflareAnalyticsToken ? ['https://static.cloudflareinsights.com'] : [])
-] as string[] as Src[];
-const any = (adOrigins.length ? ['https:'] : []) as string[] as Src[];
+const adOrigins = (mon.cloudflareAnalyticsToken ? ['https://static.cloudflareinsights.com'] : []) as string[] as Src[];
+const any = [] as Src[];
 const beacon = (mon.cloudflareAnalyticsToken ? ['https://cloudflareinsights.com'] : []) as string[] as Src[];
 let commit = 'dev';
 try {
@@ -39,7 +33,7 @@ export default defineConfig({
           'img-src': ['self', 'data:', 'blob:', ...any],
           'font-src': ['self'],
           'connect-src': ['self', ...any, ...beacon],
-          'frame-src': adOrigins.length ? any : ['none'],
+          'frame-src': ['none'],
           'worker-src': ['self', 'blob:'],
           'object-src': ['none'],
           'base-uri': ['none'],

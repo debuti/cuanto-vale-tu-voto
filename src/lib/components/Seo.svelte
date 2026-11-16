@@ -1,5 +1,4 @@
 <script lang="ts">
-  import mon from '../../../monetization.config.json';
   import { m } from '#lib/i18n';
   import { SITE } from '#lib/site';
 
@@ -23,6 +22,5 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  {#if mon.adsense.client}<meta name="google-adsense-account" content={mon.adsense.client} />{/if}
   {@html ld}
 </svelte:head>

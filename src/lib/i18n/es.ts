@@ -17,7 +17,7 @@ export const es = {
     terms: 'Términos',
     help: 'Ayuda',
     about: 'Acerca de',
-    cookies: 'Privacidad y cookies',
+    cookies: 'Privacidad',
     back: 'Volver a la calculadora'
   },
   hero: {
@@ -395,7 +395,6 @@ export const es = {
     rights: '© 2026 nubuza. Todos los derechos reservados.',
     by: 'hecho por'
   },
-  ad: 'Publicidad',
   units: {
     seat: { one: '{n} escaño', other: '{n} escaños' },
     deputy: { one: '{n} diputado', other: '{n} diputados' },

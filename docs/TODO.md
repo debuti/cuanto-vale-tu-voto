@@ -3,7 +3,6 @@
 ## Pendiente (dueño)
 
 
-- [ ] **AdSense**: crear 2 bloques display responsive (AdSense → Anuncios → Por bloque de anuncios) y poner sus IDs en `monetization.config.json` → `adsense.slots.main` y `.footer`. Sin ellos no se muestran anuncios.
 - [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `labs.nubuza.com` (dar de alta el sitio si no está) → «Manage site» → snippet JS, valor `token`). Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
 - [ ] Difusión en redes antes de la veda de encuestas (24 nov 2026).
 
@@ -11,7 +10,6 @@
 
 
 - [ ] Vigilar `scripts/auto-update.sh --loop` (encuestas al día, una vez al día hasta el 24 nov 2026): mirar `.cache/auto-update.log` y relanzarlo si el contenedor se reinició.
-- [ ] Recordar al dueño los bloques de AdSense (lo pidió el 15 nov; avisar hacia el 17–18 nov).
 - [ ] **Propuestas de cada partido** al elegirlo, por temas (corrupción, infraestructuras, impuestos y poder adquisitivo, vivienda, inmigración, economía, orden mundial): hace falta sacarlas de los programas oficiales de 2026, con enlace a la fuente y redacción neutra. Pendiente de que el dueño confirme el enfoque.
 - [ ] Mover la detección del 3 % del diagrama D'Hondt a `core` si se reutiliza.
 - [ ] Senado de 2019 (10N y 28A): ahora avisa y enseña el Congreso.
@@ -19,6 +17,8 @@
 - [ ] Tras el 29N: cargar el resultado real de 2026.
 
 ## Excepciones acordadas a las normas nubuza
+
+- **Sin anuncios** (ni AdSense ni ningún otro): lo dijo el dueño el 16 nov 2026.
 
 - **Experimento de labs.nubuza.com: no se indexa ni se lista** (noindex en cabecera y meta, sin sitemap, sin tarjeta ni enlaces desde nubuza.com ni redes). Lo confirmó el dueño al agente de nubuza el 16 nov 2026.
 
@@ -29,6 +29,8 @@
 - Sin tarjeta en nubuza.com ni alta en `ops/apps.json` **de momento** (dueño, 15 nov 2026).
 
 ## Hecho
+
+- 2026-11-16 — v1.2.3: fuera AdSense (bloques, meta, CSP, textos de privacidad y términos).
 
 - 2026-11-16 — DNS de labs.nubuza.com recreado por el dueño (`AAAA labs 100::`); la app vuelve a responder.
 

@@ -21,5 +21,5 @@ export default defineConfig({
       ],
   webServer: live
     ? undefined
-    : { command: `npx wrangler dev --port ${PORT}`, url: `http://localhost:${PORT}/cuanto-vale-tu-voto/`, reuseExistingServer: true, timeout: 60_000 }
+    : { command: `npx wrangler dev --port ${PORT}`, url: `http://localhost:${PORT}/cuanto-vale-tu-voto/`, reuseExistingServer: false, timeout: 60_000 }
 });

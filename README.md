@@ -41,7 +41,7 @@ tag `vX.Y.Z` → push de rama y tag → `npm run deploy` → comprobar la versi�
 
 ## Configuración
 
-- `monetization.config.json`: cliente y bloques de AdSense, token de Cloudflare Web Analytics.
+- `monetization.config.json`: token de Cloudflare Web Analytics. La app no lleva anuncios.
   Con un campo vacío, esa función queda apagada (y la CSP no abre sus orígenes).
 - `BASE_PATH=/` para compilar en la raíz de un dominio propio.
 
