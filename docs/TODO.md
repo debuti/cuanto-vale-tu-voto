@@ -2,13 +2,14 @@
 
 ## Pendiente (dueño)
 
+- [ ] **YA**: Cloudflare → nubuza.com → DNS → añadir `AAAA` `labs` `100::` con proxy (naranja). Sin él, labs.nubuza.com no responde.
+
 - [ ] **AdSense**: crear 2 bloques display responsive (AdSense → Anuncios → Por bloque de anuncios) y poner sus IDs en `monetization.config.json` → `adsense.slots.main` y `.footer`. Sin ellos no se muestran anuncios.
 - [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `labs.nubuza.com` (dar de alta el sitio si no está) → «Manage site» → snippet JS, valor `token`). Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
 - [ ] Difusión en redes antes de la veda de encuestas (24 nov 2026).
 
 ## Pendiente (Claude)
 
-- [ ] Borrar el Worker `labs-root` (y `infra/labs-root/`) en cuanto el agente de nubuza coordine el corte: la raíz de labs pasa a `nubuza-labs-root` del repo nubuza. Ojo: borrar el custom domain borra el DNS de labs.
 
 - [ ] Vigilar `scripts/auto-update.sh --loop` (encuestas al día, una vez al día hasta el 24 nov 2026): mirar `.cache/auto-update.log` y relanzarlo si el contenedor se reinició.
 - [ ] Recordar al dueño los bloques de AdSense (lo pidió el 15 nov; avisar hacia el 17–18 nov).
@@ -29,6 +30,8 @@
 - Sin tarjeta en nubuza.com ni alta en `ops/apps.json` **de momento** (dueño, 15 nov 2026).
 
 ## Hecho
+
+- 2026-11-16 — Borrado el Worker `labs-root`: la raíz de labs.nubuza.com la lleva `nubuza-labs-root` (repo nubuza).
 
 - 2026-11-16 — v1.2.2: noindex (`X-Robots-Tag` + meta robots), sin sitemap; robots.txt de labs-root a `Disallow: /`.
 

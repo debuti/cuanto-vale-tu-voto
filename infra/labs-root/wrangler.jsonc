@@ -1,9 +1,0 @@
-{
-  // Neutral root of labs.nubuza.com (robots.txt + landing). Static assets only.
-  // The custom domain creates the DNS record; app routes (labs.nubuza.com/<slug>*) run before it.
-  "name": "labs-root",
-  "compatibility_date": "2026-11-01",
-  "assets": { "directory": "./public", "not_found_handling": "404-page" },
-  "routes": [{ "pattern": "labs.nubuza.com", "custom_domain": true }],
-  "workers_dev": false
-}
