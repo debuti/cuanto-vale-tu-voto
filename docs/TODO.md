@@ -2,7 +2,6 @@
 
 ## Pendiente (dueño)
 
-- [ ] **YA**: Cloudflare → nubuza.com → DNS → añadir `AAAA` `labs` `100::` con proxy (naranja). Sin él, labs.nubuza.com no responde.
 
 - [ ] **AdSense**: crear 2 bloques display responsive (AdSense → Anuncios → Por bloque de anuncios) y poner sus IDs en `monetization.config.json` → `adsense.slots.main` y `.footer`. Sin ellos no se muestran anuncios.
 - [ ] **Cloudflare Web Analytics**: el beacon manual necesita el token público del sitio (Cloudflare → Analytics & Logs → Web Analytics → `labs.nubuza.com` (dar de alta el sitio si no está) → «Manage site» → snippet JS, valor `token`). Ponerlo en `monetization.config.json` → `cloudflareAnalyticsToken` (o dárselo a Claude).
@@ -30,6 +29,8 @@
 - Sin tarjeta en nubuza.com ni alta en `ops/apps.json` **de momento** (dueño, 15 nov 2026).
 
 ## Hecho
+
+- 2026-11-16 — DNS de labs.nubuza.com recreado por el dueño (`AAAA labs 100::`); la app vuelve a responder.
 
 - 2026-11-16 — Borrado el Worker `labs-root`: la raíz de labs.nubuza.com la lleva `nubuza-labs-root` (repo nubuza).
 
