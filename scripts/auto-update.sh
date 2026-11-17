@@ -32,6 +32,8 @@ run() {
   git commit -q -m "Encuestas al día: v$v" -m "Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>"
   git tag "v$v"
   if ! git push -q origin HEAD "v$v" >> "$LOG" 2>&1; then say "FAIL: push v$v"; return 1; fi
+  # Rebuild after the commit so Settings shows the commit that is live.
+  if ! npm run build > .cache/auto-build.log 2>&1; then say "FAIL: build v$v"; return 1; fi
   if ! npx wrangler deploy > .cache/auto-deploy.log 2>&1; then say "FAIL: deploy v$v"; return 1; fi
   if ! npm run smoke > .cache/auto-smoke.log 2>&1; then say "FAIL: smoke v$v"; return 1; fi
   say "published v$v ($(node -p "require('./src/lib/data/meta.json').pollCount") polls, last $(node -p "require('./src/lib/data/meta.json').lastPoll"))"
