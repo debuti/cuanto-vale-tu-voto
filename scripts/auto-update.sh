@@ -35,7 +35,10 @@ run() {
   # Rebuild after the commit so Settings shows the commit that is live.
   if ! npm run build > .cache/auto-build.log 2>&1; then say "FAIL: build v$v"; return 1; fi
   if ! npx wrangler deploy > .cache/auto-deploy.log 2>&1; then say "FAIL: deploy v$v"; return 1; fi
-  if ! npm run smoke > .cache/auto-smoke.log 2>&1; then say "FAIL: smoke v$v"; return 1; fi
+  # Right after a deploy the edge may still serve the old build: retry once a minute later.
+  if ! npm run smoke > .cache/auto-smoke.log 2>&1 && ! { sleep 60; npm run smoke > .cache/auto-smoke.log 2>&1; }; then
+    say "FAIL: smoke v$v"; return 1
+  fi
   say "published v$v ($(node -p "require('./src/lib/data/meta.json').pollCount") polls, last $(node -p "require('./src/lib/data/meta.json').lastPoll"))"
 }
 
