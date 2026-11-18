@@ -222,7 +222,7 @@
             </p>
             {#if app.projected}<p class="note">{m.result.senateModel}</p>{/if}
           {/if}
-          <p class="note">{app.projected ? m.result.projectedNote : m.result.realNote}</p>
+          <p class="note">{app.projected ? app.projectedNote : m.result.realNote}</p>
         {/if}
       {:else if app.option === 'blank'}
         <h3>✉️ {m.result.blank.title}</h3>
@@ -272,7 +272,7 @@
         <p class="box">{@html rich(fmt(m.result.abstain.one[tense], { cast: n(cast), place: c.name }))}</p>
       {/if}
       {#if app.option !== 'party'}
-        <p class="note">{app.projected ? m.result.projectedNote : m.result.realNote}</p>
+        <p class="note">{app.projected ? app.projectedNote : m.result.realNote}</p>
       {/if}
     </article>
   </div>

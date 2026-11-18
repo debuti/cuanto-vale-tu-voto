@@ -29,6 +29,10 @@ export function date(iso: string): string {
     new Date(iso + 'T00:00:00Z')
   );
 }
+/** «16 nov», for tight spots like a dropdown. */
+export function shortDate(iso: string): string {
+  return new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z'));
+}
 /** Escapes HTML and turns **bold** into <strong>. Only for our own strings. */
 export function rich(text: string): string {
   return text

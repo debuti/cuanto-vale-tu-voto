@@ -45,7 +45,7 @@
     <button type="button" class="btn small" aria-expanded={more} onclick={() => (more = !more)}>
       {more ? m.value.showLess : fmt(m.value.showMore, { n: MORE })}
     </button>
-    <p class="note">{m.value.note} {app.projected ? m.result.projectedNote : m.result.realNote}</p>
+    <p class="note">{m.value.note} {app.projected ? app.projectedNote : m.result.realNote}</p>
   </div>
 </section>
 

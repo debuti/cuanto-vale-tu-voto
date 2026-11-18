@@ -17,6 +17,17 @@
   // Time travel (Congress): three real results, then the polls every few days.
   const FRAMES = frames();
   const LAST = FRAMES.length - 1;
+  // The slider gives each real election a wider stretch than a poll date, so the years
+  // don't pile up at the left end. pos[i] is where frame i sits on the slider.
+  const REALS = FRAMES.filter((f) => f.real).length;
+  const W = Math.max(1, Math.round((FRAMES.length - REALS) / 6));
+  const pos = FRAMES.map((_, i) => (i < REALS ? i * W : REALS * W + (i - REALS)));
+  const MAX = pos[LAST];
+  const toFrame = (v: number) => {
+    let i = 0;
+    while (i < LAST && pos[i + 1] <= v) i++;
+    return i;
+  };
   const home = $derived(app.election === 'e2026' ? LAST : FRAMES.findIndex((f) => f.real && f.election === app.election));
   let fi = $state(LAST);
   $effect(() => {
@@ -27,7 +38,7 @@
   const cons = $derived(live ? s.constituencies : frameConstituencies(frame));
   const projected = $derived(live ? app.projected : !frame.real);
   const frameLabel = (f: Frame, i: number) =>
-    f.real ? fmt(m.chamber.frameReal, { date: date(f.date) }) : i === LAST ? m.chamber.frameNow : fmt(m.chamber.framePolls, { date: date(f.date) });
+    f.real ? fmt(m.chamber.frameReal, { date: date(f.date) }) : i === LAST && app.pollsFresh ? m.chamber.frameNow : fmt(m.chamber.framePolls, { date: date(f.date) });
 
   let playing = $state(false);
   let timer: ReturnType<typeof setInterval> | undefined;
@@ -68,13 +79,19 @@
   const right = $derived(seatsOf(withSeats, side, 'right'));
   const biggest = $derived(bySize(withSeats)[0]);
   const SIDES: Side[] = ['left', 'none', 'right'];
+  const MIN_SHOWN = 0.003;
+  const valid = $derived(cons.reduce((a, c) => a + c.valid, 0));
 
   const rows = $derived(
     bySize(tally).filter(
-      (p) => p.seats > 0 || (actualSeats.get(p.id) ?? 0) > 0 || (app.option === 'party' && p.id === app.partyId && p.votes > 0)
+      // Parties left with no seat stay in the table if they got a visible share.
+      (p) =>
+        p.seats > 0 ||
+        (actualSeats.get(p.id) ?? 0) > 0 ||
+        p.votes >= MIN_SHOWN * valid ||
+        (app.option === 'party' && p.id === app.partyId && p.votes > 0)
     )
   );
-  const valid = $derived(cons.reduce((a, c) => a + c.valid, 0));
   const maxCost = $derived(Math.max(1, ...withSeats.map((p) => p.votes / p.seats)));
   const range = (id: string) => (live && app.projected && congress && sys === 'actual' ? app.sim?.national[id] : undefined);
   const n = (v: number) => (projected ? approx(v) : num(v));
@@ -142,8 +159,10 @@
         </div>
         <div class="time">
           <label for="time">⏳ {m.chamber.time}</label>
-          <input id="time" type="range" min="0" max={LAST} step="1" bind:value={fi} oninput={stop} aria-valuetext={frameLabel(frame, fi)} />
-          <div class="ends" aria-hidden="true"><span>2019</span><span>2023</span><span>{m.elections.e2026.short}</span></div>
+          <input id="time" type="range" min="0" max={MAX} step="1" bind:value={() => pos[fi], (v) => (fi = toFrame(+v))} oninput={stop} aria-valuetext={frameLabel(frame, fi)} />
+          <div class="ends" aria-hidden="true">
+            <span style:--at={0}>2019</span><span style:--at={pos[REALS - 1] / MAX}>2023</span><span style:--at={1}>{m.elections.e2026.short}</span>
+          </div>
           <button type="button" class="btn small" onclick={play}>{playing ? `⏸ ${m.chamber.stop}` : `▶ ${m.chamber.play}`}</button>
           {#if !live && !playing}<button type="button" class="btn small ghost" onclick={() => (fi = home)}>↺ {m.chamber.backNow}</button>{/if}
         </div>
@@ -292,7 +311,7 @@
       <p class="note">{m.chamber.senateNote}</p>
       {#if app.projected}<p class="note">{m.result.senateModel}</p>{/if}
     {/if}
-    <p class="note">{projected ? m.result.projectedNote : m.result.realNote}</p>
+    <p class="note">{projected ? (live ? app.projectedNote : fmt(m.result.projectedOn, { date: date(frame.date) })) : m.result.realNote}</p>
   </div>
 </section>
 
@@ -334,13 +353,23 @@
     height: 44px;
     accent-color: var(--primary);
   }
+  /* Each label sits under its slider position (the thumb travels inside a 1rem inset). */
   .ends {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
+    height: 1.2em;
     font-size: 0.8rem;
     font-weight: 700;
     color: var(--ink-2);
     margin: -0.3rem 0 0.5rem;
+  }
+  .ends span {
+    position: absolute;
+    left: calc(0.5rem + var(--at) * (100% - 1rem));
+    transform: translateX(calc(var(--at) * -100%));
+    white-space: nowrap;
+  }
+  .ends span:nth-child(2) {
+    transform: translateX(-50%);
   }
   .time .btn {
     margin: 0 0.4rem 0.3rem 0;

@@ -132,6 +132,7 @@ export const es = {
     firstSeat: 'Para lograr el primer escaño aquí hace falta alrededor del **{pct} %** de los votos.',
     partyTitle: '2. Por votar a {party}',
     projectedNote: 'Previsión con las encuestas de hoy. No es un resultado: puede cambiar.',
+    projectedOn: 'Previsión con las encuestas hasta el {date}. No es un resultado: puede cambiar.',
     realNote: 'Resultado oficial de aquellas elecciones.',
     wins: {
       now: '{party} conseguiría **{seats}** aquí, con unos {votes} votos ({pct} %).',
@@ -318,7 +319,8 @@ export const es = {
     title: 'Juega con las encuestas',
     lead: 'Mueve los controles y mira cómo cambia el hemiciclo. También cambian el mapa y el valor de tu voto.',
     source: 'Encuesta',
-    average: 'Media de encuestas ({n} empresas)',
+    average: 'Media de encuestas ({n} empresas, hasta el {date})',
+    firm: '{firm} ({date})',
     turnout: 'Participación',
     turnoutValue: '{sign}{n} puntos respecto a 2023',
     turnoutSame: 'Como en 2023',

@@ -1,6 +1,7 @@
 import { browser } from '$app/env';
 import { ELECTIONS, lists2026, provinces, real } from '#lib/core/data';
 import { averagePolls, pollsterShares } from '#lib/core/polls';
+import { date, fmt, m } from '#lib/i18n';
 import { buildScenario, hasSenate } from '#lib/core/scenario';
 import type { SimResult } from '#lib/core/montecarlo';
 import type { Chamber, Constituency, ElectionId, Scenario } from '#lib/core/types';
@@ -54,6 +55,12 @@ class AppState {
   effectiveChamber = $derived<Chamber>(this.chamber === 'senado' && !hasSenate(this.election) ? 'congreso' : this.chamber);
 
   pollBase = $derived(this.pollster === 'avg' ? averagePolls() : pollsterShares(this.pollster));
+  /** Today (browser only, so the prerendered page never claims the polls are fresh). */
+  today = $state('');
+  /** Fieldwork end of the newest poll behind the forecast. */
+  pollDate = $derived(this.pollBase.used.reduce((d, p) => (p.end > d ? p.end : d), ''));
+  pollsFresh = $derived(!!this.today && !!this.pollDate && Date.parse(this.today) - Date.parse(this.pollDate) <= 86_400_000);
+  projectedNote = $derived(this.pollsFresh ? m.result.projectedNote : fmt(m.result.projectedOn, { date: date(this.pollDate) }));
   shares = $derived.by(() => {
     const out: Record<string, number> = { ...this.pollBase.shares };
     for (const [id, d] of Object.entries(this.nudges)) if (id in out) out[id] = Math.max(0, out[id] + d);
@@ -139,6 +146,7 @@ class AppState {
   }
   /** Nothing is saved anywhere: a reload starts again. Only a link carries choices. */
   load() {
+    this.today = new Date().toISOString().slice(0, 10);
     if (!browser) return;
     this.fromQuery(new URLSearchParams(location.search));
     this.ready = true;

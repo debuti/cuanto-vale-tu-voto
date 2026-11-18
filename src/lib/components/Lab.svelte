@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { meta, party } from '#lib/core/data';
-  import { pollsters } from '#lib/core/polls';
-  import { date, dec, fmt, m } from '#lib/i18n';
+  import { averagePolls, latestByFirm } from '#lib/core/polls';
+  import { date, dec, fmt, m, shortDate } from '#lib/i18n';
   import { app } from '#lib/state.svelte';
 
-  const firms = pollsters();
+  const firms = latestByFirm().sort((a, b) => a.firm.localeCompare(b.firm));
+  const avgDate = averagePolls().used.reduce((d, p) => (p.end > d ? p.end : d), '');
   const main = $derived(
     Object.entries(app.pollBase.shares).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([id]) => id)
   );
@@ -27,8 +28,8 @@
       <div>
         <label for="pollster">{m.lab.source}</label>
         <select id="pollster" class="big" bind:value={app.pollster} onchange={() => (app.nudges = {})}>
-          <option value="avg">{fmt(m.lab.average, { n: firms.length })}</option>
-          {#each firms as f (f)}<option value={f}>{f}</option>{/each}
+          <option value="avg">{fmt(m.lab.average, { n: firms.length, date: shortDate(avgDate) })}</option>
+          {#each firms as f (f.firm)}<option value={f.firm}>{fmt(m.lab.firm, { firm: f.firm, date: shortDate(f.end) })}</option>{/each}
         </select>
 
         <label for="turnout">{m.lab.turnout}</label>
