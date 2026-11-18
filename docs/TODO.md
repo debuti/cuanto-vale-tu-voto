@@ -30,6 +30,8 @@
 
 ## Hecho
 
+- 2026-11-18 — v1.2.6: el 2023 de la línea temporal cae bajo su posición; «encuestas de hoy» solo si lo son (si no, la fecha); fecha de cada encuesta en el desplegable; la tabla del hemiciclo muestra los partidos sin escaño con al menos el 0,3 % del voto.
+
 - 2026-11-16 — v1.2.3: fuera AdSense (bloques, meta, CSP, textos de privacidad y términos).
 
 - 2026-11-16 — DNS de labs.nubuza.com recreado por el dueño (`AAAA labs 100::`); la app vuelve a responder.
