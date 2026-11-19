@@ -264,8 +264,12 @@ function buildSenate(congress) {
 const PARTY_POLLS = /^(PP|PSOE|Vox|Sumar|Podemos|Frente Amplio|FA|ERC|Junts|SALF)$/i;
 function buildPolls() {
   const txt = fs.readFileSync(path.join(CACHE, 'wiki/polls.wiki'), 'utf8');
-  const start = txt.indexOf('=====2026 (with Broad Front)=====');
-  const table = txt.slice(start, txt.indexOf('\n|}', start));
+  // The 2026 section has been renamed and split over time: take the first 2026 table that
+  // has the Broad Front column (the polls since the coalition was announced).
+  const table = [...txt.matchAll(/^=====2026[^=\n]*=====$/gm)]
+    .map((h) => txt.slice(h.index, txt.indexOf('\n|}', h.index)))
+    .find((t) => t.includes('link=Broad Front (Spain)'));
+  if (!table) throw new Error('poll table not found');
   const cols = [...table.matchAll(/^! style="color:inherit;background:\{\{party color\|([^}]+)\}\};"\|/gm)].map(
     (m) => KEY_TO_ID[m[1].trim()]
   );
